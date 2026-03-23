@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "InviteRequest": {
+      "title": "Invite Request",
+      "description": "A request from a user to join the exclusive travel booking platform.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full name of the requester"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the requester"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number of the requester"
+        },
+        "age": {
+          "type": "integer",
+          "description": "Age of the requester"
+        },
+        "sex": {
+          "type": "string",
+          "enum": ["Male", "Female", "Other"],
+          "description": "Gender of the requester"
+        },
+        "message": {
+          "type": "string",
+          "description": "Optional message from the requester"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected"],
+          "description": "Status of the invite request"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the request was created"
+        }
+      },
+      "required": ["name", "email", "phone", "age", "sex", "status", "createdAt"]
+    },
+    "Waitlist": {
+      "title": "Waitlist",
+      "description": "A subscription to the JUNO waitlist/newsletter.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the subscriber"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the subscription was created"
+        }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "A message from the contact form.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the sender"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email of the sender"
+        },
+        "message": {
+          "type": "string",
+          "description": "The message content"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the message was sent"
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/invite_requests/{requestId}": {
+      "schema": "InviteRequest",
+      "description": "Collection of invite requests"
+    },
+    "/waitlist/{subscriberId}": {
+      "schema": "Waitlist",
+      "description": "Collection of waitlist subscribers"
+    },
+    "/contact_messages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Collection of contact messages"
+    }
+  }
+}
