@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { LogOut, RefreshCw } from 'lucide-react';
 
 type InviteRow = {
@@ -22,8 +23,6 @@ const AdminDashboard: React.FC = () => {
   const [rows, setRows] = useState<InviteRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const isUnlocked = useMemo(() => sessionStorage.getItem('juno_admin_unlocked') === '1', []);
 
   const loadRows = async () => {
     setLoading(true);
@@ -55,15 +54,19 @@ const AdminDashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!isUnlocked) {
-      navigate('/admin');
-      return;
-    }
-    loadRows();
-  }, [isUnlocked, navigate]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/admin');
+      } else {
+        loadRows();
+      }
+    });
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('juno_admin_unlocked');
+    return () => unsubscribe();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await signOut(auth);
     navigate('/admin');
   };
 

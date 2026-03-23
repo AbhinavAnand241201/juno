@@ -89,15 +89,15 @@ service cloud.firestore {
     // Rules
     // ===============================================================
 
-    match /invite_requests/{requestId} {
+  match /invite_requests/{requestId} {
       allow create: if isValidInviteRequest(request.resource.data);
-      allow read: if true;
+      allow read: if isAdmin();
       allow update, delete: if isAdmin();
     }
 
     match /waitlist/{subscriberId} {
       allow create: if isValidWaitlist(request.resource.data);
-      allow read: if true;
+      allow read: if isAdmin();
       allow update, delete: if isAdmin();
     }
 
@@ -108,7 +108,7 @@ service cloud.firestore {
 
     match /khurja_bookings/{bookingId} {
       allow create: if isValidKhurjaBooking(request.resource.data);
-      allow read: if true;
+      allow read: if isAdmin();
       allow update, delete: if isAdmin();
     }
 

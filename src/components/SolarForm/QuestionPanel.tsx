@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { Loader2, CheckCircle2 } from 'lucide-react';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { QUESTIONS, Question } from './constants';
 import { Answers } from './useSolarForm';
 import styles from './SolarForm.module.css';
@@ -28,6 +31,7 @@ export default function QuestionPanel({
   const optsRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState('');
   const [inputError, setInputError] = useState('');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const currentValue = useMemo(() => answers[question.id] ?? '', [answers, question.id]);
 
@@ -69,7 +73,47 @@ export default function QuestionPanel({
     onAnswer(question.id, value.trim());
   };
 
+  const handleSubmit = async () => {
+    if (submitStatus === 'loading' || submitStatus === 'success') return;
+    setSubmitStatus('loading');
+    setInputError('');
+
+    try {
+      await addDoc(collection(db, 'invite_requests'), {
+        name: answers.name?.trim() || '',
+        email: answers.email?.trim().toLowerCase() || '',
+        phone: answers.phone?.trim() || '',
+        age: parseInt(answers.age || '0', 10),
+        sex: answers.sex || 'Other',
+        message: `City: ${answers.city?.trim() || ''} | Trip Style: ${answers.tripStyle?.trim() || ''}`,
+        status: 'pending',
+        createdAt: serverTimestamp(),
+      });
+      setSubmitStatus('success');
+    } catch (e: any) {
+      setSubmitStatus('error');
+      setInputError(e?.message || 'Failed to submit. Please try again.');
+    }
+  };
+
   if (isComplete) {
+    if (submitStatus === 'success') {
+      return (
+        <div ref={panelRef} className={styles.panel}>
+          <div className={styles.completeInner} style={{ textAlign: 'center' }}>
+            <span className={styles.rocketEmoji} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <CheckCircle2 size={64} color="#10b981" />
+            </span>
+            <h3 className={styles.completeTitle}>Request Received</h3>
+            <p className={styles.completeSubtitle}>Your journey is being charted. We will be in touch shortly.</p>
+            <button className={styles.resetBtn} onClick={onReset} style={{ marginTop: '2rem' }}>
+              Explore again
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div ref={panelRef} className={styles.panel}>
         <div className={styles.completeInner}>
@@ -77,14 +121,24 @@ export default function QuestionPanel({
           <h3 className={styles.completeTitle}>Your journey awaits</h3>
           <p className={styles.completeSubtitle}>We have charted the perfect trip from your answers.</p>
           <div className={styles.answerTags}>
-            {Object.values(answers).map((value, idx) => (
-              <span key={`${value}-${idx}`} className={styles.aTag}>
-                {value}
+            {Object.values(answers).map((val, idx) => (
+              <span key={`${val}-${idx}`} className={styles.aTag}>
+                {val}
               </span>
             ))}
           </div>
-          <button className={styles.submitBtn}>See My Itinerary</button>
-          <button className={styles.resetBtn} onClick={onReset}>
+          {submitStatus === 'error' && inputError && (
+            <p className={styles.errorText} style={{ textAlign: 'center', marginTop: '1rem' }}>{inputError}</p>
+          )}
+          <button 
+            className={styles.submitBtn} 
+            onClick={handleSubmit}
+            disabled={submitStatus === 'loading'}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: submitStatus === 'loading' ? 0.7 : 1 }}
+          >
+            {submitStatus === 'loading' ? <Loader2 className="animate-spin" size={20} /> : 'See My Itinerary'}
+          </button>
+          <button className={styles.resetBtn} onClick={onReset} disabled={submitStatus === 'loading'}>
             Explore again
           </button>
         </div>
