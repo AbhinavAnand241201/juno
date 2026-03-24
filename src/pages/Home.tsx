@@ -133,11 +133,11 @@ const Home = () => {
 
       {/* Hero Section */}
       <section className="hero-section relative h-[55vh] sm:h-[70vh] md:h-[90vh] flex items-end sm:items-center justify-center overflow-hidden px-6">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 bg-[#c9b49b]">
           <img
             src={khurjaHero}
             alt="Ceramic craftsmanship"
-            className="w-full h-full object-cover object-[center_40%] opacity-80"
+            className="w-full h-full object-contain md:object-cover object-center opacity-90 md:opacity-80"
             loading="eager"
             fetchPriority="high"
             referrerPolicy="no-referrer"
