@@ -137,7 +137,7 @@ const Home = () => {
           <img
             src={khurjaHero}
             alt="Ceramic craftsmanship"
-            className="w-full h-full object-cover opacity-80"
+            className="w-full h-full object-cover object-[center_40%] opacity-80"
             loading="eager"
             fetchPriority="high"
             referrerPolicy="no-referrer"
@@ -148,10 +148,10 @@ const Home = () => {
           <div className="floating-orb-delayed absolute bottom-20 right-20 w-36 h-36 bg-juno-ochre/20 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mt-40 md:mt-64">
+        <div className="relative z-10 text-center max-w-5xl mt-16 md:mt-64">
           <div className="hero-text">
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-20 md:mt-32">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8 md:mt-32">
               <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/trip/clay-day-khurja"
