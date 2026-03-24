@@ -11,7 +11,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import IntroOverlay from '../components/IntroOverlay';
-import KhurjaForm from '../components/KhurjaForm';
+import RequestInviteForm from '../components/RequestInviteForm';
+import khurjaHero from '../assets/gallery/khurja.png';
+import potteryImage from '../assets/gallery/pottery.png';
+import shapingClayImage from '../assets/gallery/shapingClay.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,7 +36,7 @@ const Home = () => {
     // Reveal animations on scroll
     const revealElements = gsap.utils.toArray('.gsap-reveal');
     revealElements.forEach((el: any) => {
-      gsap.fromTo(el, 
+      gsap.fromTo(el,
         { y: 40, autoAlpha: 0 },
         {
           y: 0,
@@ -113,7 +116,7 @@ const Home = () => {
   return (
     <div ref={container} className="bg-juno-bg overflow-hidden">
       <IntroOverlay />
-      <KhurjaForm open={bookingOpen} onClose={() => setBookingOpen(false)} />
+      <RequestInviteForm open={bookingOpen} onClose={() => setBookingOpen(false)} />
 
       <section className="bg-[#2A2520] text-[#E8A94A] py-3 overflow-hidden">
         <div className="whitespace-nowrap animate-[ticker_25s_linear_infinite] inline-block">
@@ -131,42 +134,49 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero-section relative h-[90vh] flex items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=2070" 
-            className="hero-img w-full h-full object-cover opacity-60 scale-110"
-            alt="Luxury Travel"
+          <img
+            src={khurjaHero}
+            alt="Ceramic craftsmanship"
+            className="w-full h-full object-cover opacity-80"
             loading="eager"
             fetchPriority="high"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-juno-bg/60 via-transparent to-juno-bg" />
+          <div className="absolute inset-0 bg-juno-sand mix-blend-multiply opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-juno-bg via-juno-bg/20 to-transparent" />
           <div className="floating-orb absolute top-16 left-10 w-28 h-28 bg-juno-sand/30 rounded-full blur-2xl" />
           <div className="floating-orb-delayed absolute bottom-20 right-20 w-36 h-36 bg-juno-ochre/20 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl">
+        <div className="relative z-10 text-center max-w-5xl mt-40 md:mt-64">
           <div className="hero-text">
-            <span className="text-[10px] md:text-xs font-semibold tracking-[0.5em] uppercase text-juno-navy/60 mb-6 block">
-              Day Trip from Delhi
-            </span>
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-bold leading-none mb-8 tracking-tighter text-juno-navy">
-              Clay Day - <br />
-              <span className="italic text-juno-ochre">Khurja Craft Immersion</span>
-            </h1>
-            <p className="text-base md:text-xl text-juno-navy/60 font-light max-w-2xl mx-auto mb-12 leading-relaxed px-4">
-              Step inside working pottery workshops, meet the makers, and create something with your own hands.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-20 md:mt-32">
               <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
-                <button
-                  onClick={() => setBookingOpen(true)}
+                <Link
+                  to="/trip/clay-day-khurja"
                   className="btn-hover-effect px-14 py-6 bg-juno-navy text-juno-bg text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
                 >
-                  Reserve your spot <ArrowRight className="w-4 h-4" />
-                </button>
+                  View Khurja Trip <ArrowRight className="w-4 h-4" />
+                </Link>
               </motion.div>
             </div>
           </div>
+        </div>
+
+        {/* Floating Gujarat Hero Tile */}
+        <div className="absolute bottom-10 right-10 hidden lg:block z-20 gsap-reveal">
+          <Link to="/trip/clay-day-khurja" className="group flex bg-white/80 backdrop-blur-md p-4 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 items-center gap-6 max-w-sm border border-white/40">
+            <img src={potteryImage} alt="Khurja" className="w-20 h-20 rounded-2xl object-cover" />
+            <div>
+              <div className="text-[10px] uppercase font-bold tracking-widest text-juno-ochre mb-1">New Journey</div>
+              <h3 className="font-display font-bold text-juno-navy text-lg leading-tight group-hover:text-juno-ochre transition-colors">Khurja Trip</h3>
+              <p className="text-xs text-juno-navy/60 mt-1">15 strangers, 12 people</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-juno-navy/5 flex items-center justify-center group-hover:bg-juno-navy group-hover:text-white transition-colors shrink-0">
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -183,23 +193,23 @@ const Home = () => {
       <section className="py-24 md:py-40 px-6 md:px-12 bg-juno-navy text-juno-bg">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
           {[
-            { 
-              title: 'Create', 
+            {
+              title: 'Create',
               desc: 'Reconnect with your restless hands through master-led workshops and craft revival.',
               icon: Compass
             },
-            { 
-              title: 'Explore', 
+            {
+              title: 'Explore',
               desc: 'Venture into the raw, high-octane pulse of a world that exists entirely beyond the screen.',
               icon: Globe
             },
-            { 
-              title: 'Restore', 
+            {
+              title: 'Restore',
               desc: 'Find calm in the intentional silence of a journey designed to help you truly arrive.',
               icon: ShieldCheck
             }
           ].map((pillar, idx) => (
-            <motion.div 
+            <motion.div
               key={pillar.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -231,14 +241,15 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Khurja Trip */}
           <div className="gsap-reveal reveal-left">
-            <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-juno-navy/5">
-              <img 
-                src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&q=80&w=1000" 
-                alt="Pottery in Khurja" 
+            <Link to="/trip/clay-day-khurja" className="group block relative aspect-[4/5] overflow-hidden rounded-3xl bg-juno-navy/5">
+              <img
+                src={potteryImage}
+                alt="Pottery in Khurja"
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-juno-navy/90 via-juno-navy/20 to-transparent" />
@@ -248,14 +259,16 @@ const Home = () => {
                 <p className="text-juno-bg/60 font-light text-sm mb-6 max-w-md">
                   Wheel-thrown. Sun-dried. Fired at dawn. A weekend with a master potter and eleven strangers.
                 </p>
-                <Link to="/invite" className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-bg hover:text-juno-sand transition-colors">
-                  I want in <ArrowRight className="w-4 h-4" />
-                </Link>
+                <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-bg group-hover:text-juno-sand transition-colors mt-auto">
+                  View Journey <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
 
-          <div className="flex flex-col justify-center p-8 md:p-12 bg-juno-sand/10 rounded-3xl border border-juno-sand/20 gsap-reveal reveal-right">
+
+          {/* The Promise */}
+          <div className="flex flex-col justify-center p-8 bg-juno-sand/10 rounded-3xl border border-juno-sand/20 gsap-reveal reveal-right">
             <h4 className="text-lg md:text-xl font-display font-bold text-juno-navy mb-4 uppercase tracking-widest">The Promise</h4>
             <p className="text-juno-navy/60 font-light leading-relaxed mb-8 italic text-base md:text-lg">
               "We handle everything you'd worry about. So you can forget that worry exists."
@@ -287,7 +300,7 @@ const Home = () => {
             View More <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        
+
         <div className="gallery-track flex gap-4 md:gap-8">
           {[
             'https://images.unsplash.com/photo-1590540179852-2110a54f813a?auto=format&fit=crop&q=80&w=600',

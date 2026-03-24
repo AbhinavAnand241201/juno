@@ -14,13 +14,12 @@ import {
   Instagram, 
   Twitter, 
   Facebook,
-  ChevronDown,
-  Sun,
-  Moon
+  ChevronDown
 } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Lenis from 'lenis';
+import { Toaster } from 'react-hot-toast';
 
 // Pages
 import Home from './pages/Home';
@@ -31,6 +30,9 @@ import Contact from './pages/Contact';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import Invite from './pages/Invite';
+import TripDetail from './pages/TripDetail';
+
+import logo from './assets/logo.png';
 
 // Components
 const ScrollToTop = () => {
@@ -49,7 +51,7 @@ const ScrollToTop = () => {
   return null;
 };
 
-const Navbar = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: () => void }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -94,8 +96,9 @@ const Navbar = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: () => v
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          <Compass className="w-6 h-6 md:w-8 md:h-8 text-juno-navy group-hover:rotate-180 transition-transform duration-1000" />
-          <span className="text-xl md:text-2xl font-display font-bold tracking-[0.2em] uppercase text-juno-navy">JUNO</span>
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center">
+            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8]" />
+          </div>
         </Link>
 
         {/* Desktop Nav */}
@@ -115,13 +118,7 @@ const Navbar = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: () => v
             </Link>
           ))}
           
-          <button 
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-juno-navy/5 transition-colors text-juno-navy"
-            aria-label="Toggle Theme"
-          >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
+
 
           <Link 
             to="/invite"
@@ -133,13 +130,7 @@ const Navbar = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: () => v
 
         {/* Mobile Nav Toggle */}
         <div className="flex items-center gap-4 lg:hidden">
-          <button 
-            onClick={toggleTheme}
-            className="p-2 rounded-full text-juno-navy"
-            aria-label="Toggle Theme"
-          >
-            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
+
           <button className="text-juno-navy p-2" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -202,21 +193,22 @@ const Footer = () => {
     <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-24">
       <div className="col-span-1 md:col-span-2">
         <div className="flex items-center gap-3 mb-10">
-          <Compass className="w-10 h-10 text-juno-sand" />
-          <span className="text-3xl font-display font-bold tracking-[0.2em] uppercase">JUNO</span>
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden flex items-center justify-center">
+            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8] brightness-0 invert opacity-80" />
+          </div>
         </div>
         <p className="text-juno-footer-text/60 font-light max-w-md mb-12 text-lg leading-relaxed">
           Curated experiential journeys for the curious and mindful. 
           India's first invite-only experiential journey club.
         </p>
         <div className="flex gap-8">
-          <a href="#" className="group">
+          <a href="https://instagram.com/juno_placeholder" target="_blank" rel="noreferrer" className="group">
             <Instagram className="w-6 h-6 text-juno-footer-text/40 group-hover:text-juno-sand group-hover:-translate-y-1 transition-all duration-300" />
           </a>
-          <a href="#" className="group">
+          <a href="https://twitter.com/juno_placeholder" target="_blank" rel="noreferrer" className="group">
             <Twitter className="w-6 h-6 text-juno-footer-text/40 group-hover:text-juno-sand group-hover:-translate-y-1 transition-all duration-300" />
           </a>
-          <a href="#" className="group">
+          <a href="https://facebook.com/juno_placeholder" target="_blank" rel="noreferrer" className="group">
             <Facebook className="w-6 h-6 text-juno-footer-text/40 group-hover:text-juno-sand group-hover:-translate-y-1 transition-all duration-300" />
           </a>
         </div>
@@ -249,24 +241,6 @@ const Footer = () => {
 };
 
 export default function App() {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme');
-      return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -289,13 +263,14 @@ export default function App() {
     };
   }, []);
 
-  const toggleTheme = () => setIsDark(!isDark);
+
 
   return (
     <Router>
+      <Toaster position="bottom-center" toastOptions={{ duration: 5000, className: 'text-sm shadow-xl rounded-2xl border border-juno-navy/10' }} />
       <ScrollToTop />
       <div className="min-h-screen flex flex-col font-sans selection:bg-juno-ochre selection:text-juno-bg bg-juno-bg transition-colors duration-500">
-        <Navbar isDark={isDark} toggleTheme={toggleTheme} />
+        <Navbar />
         <main className="flex-grow pt-24 md:pt-32">
           <AnimatePresence mode="wait">
             <Routes>
@@ -305,6 +280,7 @@ export default function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/invite" element={<Invite />} />
+              <Route path="/trip/:slug" element={<TripDetail />} />
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Routes>

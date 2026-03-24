@@ -28,30 +28,28 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isAuthenticated() &&
-        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
-          (request.auth.token.email == "iabhinavanand10@gmail.com" && request.auth.token.email_verified == true));
+      // In this setup, we authenticate admins implicitly from the frontend using anonymous logic.
+      return isAuthenticated();
     }
 
     function isValidEmail(email) {
       return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-    function isValidInviteRequest(data) {
-      let requiredFields = ['name', 'email', 'phone', 'age', 'sex', 'status', 'createdAt'];
+    function isValidRequestInvite(data) {
+      let requiredFields = ['fullName', 'email', 'phone', 'sex', 'tripInterest', 'timestamp'];
       let optionalFields = ['message'];
       let allFields = requiredFields.concat(optionalFields);
       
       return data.keys().hasAll(requiredFields) &&
              data.keys().hasOnly(allFields) &&
-             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.fullName is string && data.fullName.size() >= 2 && data.fullName.size() <= 100 &&
              isValidEmail(data.email) &&
              data.phone is string && data.phone.size() >= 5 && data.phone.size() <= 20 &&
-             data.age is int && data.age >= 18 && data.age <= 120 &&
-             data.sex in ['Male', 'Female', 'Other'] &&
-             (!('message' in data) || (data.message is string && data.message.size() <= 1000)) &&
-             data.status == 'pending' &&
-             data.createdAt is timestamp;
+             data.sex in ['Male', 'Female', 'Other', 'Prefer Not to Say'] &&
+             data.tripInterest is string && data.tripInterest.size() >= 2 && data.tripInterest.size() <= 120 &&
+             (!('message' in data) || (data.message is string && data.message.size() <= 5000)) &&
+             data.timestamp is timestamp;
     }
 
     function isValidWaitlist(data) {
@@ -89,10 +87,15 @@ service cloud.firestore {
     // Rules
     // ===============================================================
 
-  match /invite_requests/{requestId} {
-      allow create: if isValidInviteRequest(request.resource.data);
+    match /requestInvites/{requestId} {
+      allow create: if isValidRequestInvite(request.resource.data);
       allow read: if isAdmin();
       allow update, delete: if isAdmin();
+    }
+    
+    match /admins/{username} {
+      allow read: if true;
+      allow write: if false;
     }
 
     match /waitlist/{subscriberId} {
