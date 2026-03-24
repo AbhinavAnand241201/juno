@@ -132,7 +132,7 @@ const Home = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="hero-section relative h-[90vh] flex items-center justify-center overflow-hidden px-6">
+      <section className="hero-section relative h-[55vh] sm:h-[70vh] md:h-[90vh] flex items-end sm:items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 z-0">
           <img
             src={khurjaHero}
@@ -148,10 +148,10 @@ const Home = () => {
           <div className="floating-orb-delayed absolute bottom-20 right-20 w-36 h-36 bg-juno-ochre/20 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mt-16 md:mt-64">
+        <div className="relative z-10 text-center max-w-5xl mb-10 sm:mb-0 sm:mt-16 md:mt-64">
           <div className="hero-text">
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8 md:mt-32">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-4 sm:mt-8 md:mt-32">
               <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/trip/clay-day-khurja"
