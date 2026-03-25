@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Globe, ShieldCheck, Compass } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,11 +12,25 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import IntroOverlay from '../components/IntroOverlay';
 import RequestInviteForm from '../components/RequestInviteForm';
-import khurjaHero from '../assets/gallery/khurja.png';
+
+// Local assets
+import heroVideo from '../asset/HERO SECTION_Option__1.mp4';
 import potteryImage from '../assets/gallery/pottery.png';
-import shapingClayImage from '../assets/gallery/shapingClay.png';
+import isItForYouImg from '../asset/is_it_for_u.jpg';
+
+// Gallery images from asset folder
+import exp1 from '../asset/Experience_1.png';
+import exp2 from '../asset/Experience_2.jpg';
+import exp3 from '../asset/Exp_3.png';
+import exp4 from '../asset/EXP_4.png';
+import exp5 from '../asset/EXP_5.png';
+import exp6 from '../asset/EXP_6.png';
+import gallery1 from '../asset/GALLERY.png';
+import gallery2 from '../asset/GALLERY1.png';
+import gallery3 from '../asset/GALLERY7.png';
 
 gsap.registerPlugin(ScrollTrigger);
+
 
 const Home = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -80,18 +94,6 @@ const Home = () => {
       );
     });
 
-    // Parallax effect for hero image
-    gsap.to('.hero-img', {
-      yPercent: 15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      }
-    });
-
     // Horizontal scroll for gallery teaser
     const track = document.querySelector('.gallery-track');
     if (track) {
@@ -118,79 +120,127 @@ const Home = () => {
       <IntroOverlay />
       <RequestInviteForm open={bookingOpen} onClose={() => setBookingOpen(false)} />
 
+      {/* Scrolling Ticker */}
       <section className="bg-[#2A2520] text-[#E8A94A] py-3 overflow-hidden">
         <div className="whitespace-nowrap animate-[ticker_25s_linear_infinite] inline-block">
-          {Array.from({ length: 2 }).map((_, idx) => (
+          {Array.from({ length: 4 }).map((_, idx) => (
             <span key={idx}>
-              <span className="px-8 text-xs tracking-[0.2em] uppercase">Khurja Craft Immersion ✦</span>
-              <span className="px-8 text-xs tracking-[0.2em] uppercase">Clay. Culture. Connection ✦</span>
-              <span className="px-8 text-xs tracking-[0.2em] uppercase">Just beyond Delhi ✦</span>
-              <span className="px-8 text-xs tracking-[0.2em] uppercase">Limited seats available ✦</span>
+              <span className="px-8 text-xs tracking-[0.2em] uppercase">Where stories, experiences and connections unfold ✦</span>
             </span>
           ))}
         </div>
       </section>
 
       {/* Hero Section */}
-      <section className="hero-section relative h-[55vh] sm:h-[70vh] md:h-[90vh] flex items-end sm:items-center justify-center overflow-hidden px-6">
-        <div className="absolute inset-0 z-0 bg-[#c9b49b]">
-          <img
-            src={khurjaHero}
-            alt="Ceramic craftsmanship"
-            className="w-full h-full object-contain md:object-cover object-center opacity-90 md:opacity-80"
-            loading="eager"
-            fetchPriority="high"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-juno-sand mix-blend-multiply opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-juno-bg via-juno-bg/20 to-transparent" />
-          <div className="floating-orb absolute top-16 left-10 w-28 h-28 bg-juno-sand/30 rounded-full blur-2xl" />
-          <div className="floating-orb-delayed absolute bottom-20 right-20 w-36 h-36 bg-juno-ochre/20 rounded-full blur-3xl" />
+      <section className="hero-section relative h-[100vh] flex items-center justify-center overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mb-10 sm:mb-0 sm:mt-16 md:mt-64">
+        <div className="relative z-10 text-center max-w-5xl px-6">
           <div className="hero-text">
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-4 sm:mt-8 md:mt-32">
-              <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  to="/trip/clay-day-khurja"
-                  className="btn-hover-effect px-14 py-6 bg-juno-navy text-juno-bg text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
-                >
-                  View Khurja Trip <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-6 drop-shadow-2xl"
+              style={{ fontFamily: '"Playfair Display", serif' }}
+            >
+              "You've been everywhere.<br />
+              <span className="italic text-[#E8A94A]">But have you ever truly arrived?"</span>
+            </h1>
+            <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} className="mt-10">
+              <button
+                onClick={() => setBookingOpen(true)}
+                className="btn-hover-effect px-12 py-5 bg-[#E8A94A] text-[#2A2520] text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl hover:shadow-[#E8A94A]/30 transition-all duration-300"
+              >
+                Request Invite
+              </button>
+            </motion.div>
           </div>
-        </div>
-
-        {/* Floating Gujarat Hero Tile */}
-        <div className="absolute bottom-10 right-10 hidden lg:block z-20 gsap-reveal">
-          <Link to="/trip/clay-day-khurja" className="group flex bg-white/80 backdrop-blur-md p-4 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 items-center gap-6 max-w-sm border border-white/40">
-            <img src={potteryImage} alt="Khurja" className="w-20 h-20 rounded-2xl object-cover" />
-            <div>
-              <div className="text-[10px] uppercase font-bold tracking-widest text-juno-ochre mb-1">New Journey</div>
-              <h3 className="font-display font-bold text-juno-navy text-lg leading-tight group-hover:text-juno-ochre transition-colors">Khurja Trip</h3>
-              <p className="text-xs text-juno-navy/60 mt-1">15 strangers, 12 people</p>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-juno-navy/5 flex items-center justify-center group-hover:bg-juno-navy group-hover:text-white transition-colors shrink-0">
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </Link>
         </div>
       </section>
 
-      {/* Tension Line */}
-      <section className="py-24 md:py-40 text-center px-6 gsap-reveal">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl sm:text-2xl md:text-4xl font-display font-light text-juno-navy italic leading-relaxed">
-            "You've been everywhere. But have you ever truly arrived?"
-          </h2>
+      {/* What is JUNO Section */}
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-juno-bg">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+          >
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-juno-ochre font-bold mb-4 block">About Us</span>
+              <h2 className="text-4xl md:text-6xl font-display font-bold text-juno-navy mb-8 leading-tight"
+                style={{ fontFamily: '"Playfair Display", serif' }}
+              >
+                What is <span className="italic text-juno-ochre">JUNO?</span>
+              </h2>
+              <div className="space-y-5 text-juno-navy/70 font-light leading-relaxed text-base md:text-lg">
+                <p>
+                  JUNO is an experiential travel platform designed for people who want more than just a trip.
+                </p>
+                <p>
+                  Instead of rushing from one destination to another, we create journeys where you participate, learn, and connect with the places you visit. You might spend a day shaping clay with artisans in Khurja, stay in a monastery in the mountains, or cycle through quiet villages where life moves at a different pace.
+                </p>
+                <p>
+                  Our experiences are intentionally small, thoughtfully curated, and built around real people and real places. Every journey is designed to feel personal, meaningful, and memorable.
+                </p>
+                <p className="font-medium text-juno-navy italic text-xl">
+                  Because travel should not just show you the world — it should let you experience it.
+                </p>
+              </div>
+            </div>
+            <div className="relative">
+              {/* Animated floating cards */}
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="bg-white rounded-3xl p-8 shadow-xl border border-juno-sand/20 mb-6"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-juno-ochre/20 flex items-center justify-center">
+                    <Compass className="w-5 h-5 text-juno-ochre" />
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-juno-navy/50 font-bold">Experience</div>
+                    <div className="text-juno-navy font-bold">Immersive Craft</div>
+                  </div>
+                </div>
+                <p className="text-juno-navy/60 text-sm font-light">Shape clay, cook local food, learn ancient crafts — truly hands-on.</p>
+              </motion.div>
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                className="bg-juno-navy rounded-3xl p-8 shadow-xl ml-8"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-juno-sand/20 flex items-center justify-center">
+                    <Globe className="w-5 h-5 text-juno-sand" />
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-juno-sand/50 font-bold">Community</div>
+                    <div className="text-white font-bold">Small Groups, Deep Bonds</div>
+                  </div>
+                </div>
+                <p className="text-juno-bg/60 text-sm font-light">Max 12 people per journey. Every group is intentionally curated.</p>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Philosophy (3 Pillars) */}
-      <section className="py-24 md:py-40 px-6 md:px-12 bg-juno-navy text-juno-bg">
+      <section className="py-16 md:py-24 px-6 md:px-12 bg-juno-navy text-juno-bg">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
           {[
             {
@@ -227,8 +277,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Journeys */}
-      <section className="py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
+      {/* Featured Journeys / Upcoming Trips */}
+      <section className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 gsap-reveal">
           <div className="max-w-xl reveal-left">
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 text-juno-navy">Upcoming Journeys</h2>
@@ -242,7 +292,7 @@ const Home = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Khurja Trip */}
+          {/* Khurja Trip Card */}
           <div className="gsap-reveal reveal-left">
             <Link to="/trip/clay-day-khurja" className="group block relative aspect-[4/5] overflow-hidden rounded-3xl bg-juno-navy/5">
               <img
@@ -250,22 +300,20 @@ const Home = () => {
                 alt="Pottery in Khurja"
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90"
-                referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-juno-navy/90 via-juno-navy/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">Khurja | Coming Soon</div>
-                <h3 className="text-2xl md:text-4xl font-display font-bold text-juno-bg mb-4">Clay & Quiet</h3>
-                <p className="text-juno-bg/60 font-light text-sm mb-6 max-w-md">
-                  Wheel-thrown. Sun-dried. Fired at dawn. A weekend with a master potter and eleven strangers.
+                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">Khurja | 5th March 2026</div>
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-juno-bg mb-3">Clay Day — Khurja Craft Immersion</h3>
+                <p className="text-juno-bg/70 font-light text-sm mb-6 max-w-md">
+                  Spend a day where clay becomes art and you become part of the process.
                 </p>
                 <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-bg group-hover:text-juno-sand transition-colors mt-auto">
-                  View Journey <ArrowRight className="w-4 h-4" />
+                  Book your free slot <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
             </Link>
           </div>
-
 
           {/* The Promise */}
           <div className="flex flex-col justify-center p-8 bg-juno-sand/10 rounded-3xl border border-juno-sand/20 gsap-reveal reveal-right">
@@ -290,7 +338,7 @@ const Home = () => {
       </section>
 
       {/* Gallery Section */}
-      <section className="gallery-section py-24 md:py-40 px-6 bg-juno-bg overflow-hidden">
+      <section className="gallery-section py-16 md:py-24 px-6 bg-juno-bg overflow-hidden">
         <div className="max-w-7xl mx-auto text-center mb-16 gsap-reveal">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 text-juno-navy">Ready to see the world JUNO opens up?</h2>
           <p className="text-juno-navy/60 font-light max-w-2xl mx-auto">
@@ -302,66 +350,41 @@ const Home = () => {
         </div>
 
         <div className="gallery-track flex gap-4 md:gap-8">
-          {[
-            'https://images.unsplash.com/photo-1590540179852-2110a54f813a?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1520408222757-6f9f95d87d5d?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1590540179852-2110a54f813a?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1520408222757-6f9f95d87d5d?auto=format&fit=crop&q=80&w=600',
-            'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=600'
-          ].map((img, i) => (
+          {[exp1, exp2, exp3, exp4, exp5, exp6, gallery1, gallery2, gallery3].map((img, i) => (
             <div key={i} className="w-64 md:w-96 h-80 md:h-[30rem] shrink-0 rounded-2xl overflow-hidden hover-zoom">
-              <img src={img} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Gallery" loading="lazy" referrerPolicy="no-referrer" />
+              <img src={img} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Gallery" loading="lazy" />
             </div>
           ))}
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="text-center mb-20 gsap-reveal">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 text-juno-navy">Traveler Testimonials</h2>
-          <p className="text-juno-navy/60 font-light max-w-2xl mx-auto">
-            Discover what our guests have to say about their journeys with us. From the first touch of wet clay to the long drive home in silence — their words say what ours cannot.
-          </p>
-        </div>
+      {/* Testimonials - ARCHIVED until 5th April */}
+      {/* <section className="py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
+        Testimonials section archived until 5th April as per client request
+      </section> */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {[
-            { name: 'James W.', role: 'Creative Director', text: 'The most seamless travel experience I\'ve ever had. Truly exceptional service.', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' },
-            { name: 'Sarah L.', role: 'Architect', text: 'JUNO reconnected me with the tactile world. The pottery workshop in Khurja was life-changing.', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200' },
-            { name: 'Michael R.', role: 'Tech Founder', text: 'A quiet luxury that is hard to find. The small group size made all the difference.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200' }
-          ].map((t, idx) => (
-            <motion.div
-              key={t.name}
-              whileHover={{ y: -8 }}
-              className="p-8 bg-juno-bg border border-juno-navy/5 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 gsap-reveal"
-            >
-              <p className="text-juno-navy/80 font-light italic mb-8 leading-relaxed">"{t.text}"</p>
-              <div className="flex items-center gap-4">
-                <img src={t.img} className="w-12 h-12 rounded-full object-cover" alt={t.name} loading="lazy" referrerPolicy="no-referrer" />
-                <div>
-                  <div className="text-sm font-bold text-juno-navy uppercase tracking-widest">{t.name}</div>
-                  <div className="text-[10px] text-juno-navy/40 uppercase tracking-widest">{t.role}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-24 md:py-40 px-6 bg-juno-navy text-juno-bg text-center">
-        <div className="max-w-4xl mx-auto gsap-reveal">
+      {/* Final CTA - Is It For You */}
+      <section
+        className="py-24 md:py-40 px-6 text-juno-bg text-center relative overflow-hidden"
+        style={{
+          backgroundImage: `url(${isItForYouImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className="absolute inset-0 bg-juno-navy/70" />
+        <div className="relative z-10 max-w-4xl mx-auto gsap-reveal">
           <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
             This isn't for everyone. <br />
             <span className="italic text-juno-sand">Is it for you?</span>
           </h2>
-          <Link to="/invite" className="btn-hover-effect inline-flex px-14 py-6 bg-juno-bg text-juno-navy text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300">
+          <button
+            onClick={() => setBookingOpen(true)}
+            className="btn-hover-effect inline-flex px-14 py-6 bg-juno-bg text-juno-navy text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300"
+          >
             Request an Invitation
-          </Link>
+          </button>
         </div>
       </section>
     </div>

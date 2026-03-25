@@ -65,7 +65,7 @@ export default function IntroOverlay() {
               style={{ clipPath: 'polygon(0 70%, 20% 50%, 40% 65%, 60% 40%, 80% 60%, 100% 45%, 100% 100%, 0 100%)' }}
             />
 
-            <div className="text-center relative z-10">
+            <div className="text-center relative z-10 flex flex-col items-center">
               <motion.div
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -79,9 +79,9 @@ export default function IntroOverlay() {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.8, delay: 2 }}
-                className="text-[clamp(11px,2vw,14px)] tracking-[0.35em] uppercase text-[#E8A94A]"
+                className="text-[clamp(11px,2vw,14px)] tracking-[0.35em] uppercase text-[#E8A94A] mt-4"
               >
-                Journeys of depth
+                Experiential Journeys
               </motion.div>
             </div>
           </div>

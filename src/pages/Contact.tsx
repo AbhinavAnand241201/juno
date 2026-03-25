@@ -1,12 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'motion/react';
-import { 
-  Instagram,
-  Twitter,
-  Facebook,
-  Mail,
-  Phone
-} from 'lucide-react';
+import { Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -25,11 +19,8 @@ const Contact = () => {
 
   return (
     <div ref={container} className="bg-juno-bg overflow-hidden min-h-screen">
-      {/* Hero Section */}
       <section className="relative py-32 md:py-48 px-6 md:px-12 overflow-hidden">
-        {/* Background Accent */}
         <div className="absolute top-0 left-0 w-full h-full bg-juno-navy/5 -skew-y-6 transform -translate-y-1/2 z-0" />
-        
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="max-w-4xl">
             <span className="text-[10px] md:text-xs font-semibold tracking-[0.5em] uppercase text-juno-navy/60 mb-6 block gsap-reveal">
@@ -46,23 +37,16 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Info */}
       <section className="pb-24 md:pb-40 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center text-center">
         <div className="space-y-16 w-full max-w-3xl">
           <div className="gsap-reveal bg-juno-card p-12 rounded-[3rem] shadow-sm border border-juno-navy/5">
             <h3 className="text-xl md:text-2xl font-display font-bold text-juno-navy mb-8 uppercase tracking-widest">Reach out directly:</h3>
             <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
-              <a href="mailto:hello@junojourneys.in" className="flex flex-col items-center gap-4 text-lg font-light text-juno-navy/60 hover:text-juno-navy transition-colors group">
+              <a href="mailto:info.clubjuno@gmail.com" className="flex flex-col items-center gap-4 text-lg font-light text-juno-navy/60 hover:text-juno-navy transition-colors group">
                 <div className="w-16 h-16 rounded-full bg-juno-navy/5 flex items-center justify-center group-hover:bg-juno-navy group-hover:text-juno-bg transition-all duration-500">
                   <Mail className="w-6 h-6" />
                 </div>
-                hello@junojourneys.in
-              </a>
-              <a href="tel:+910000000000" className="flex flex-col items-center gap-4 text-lg font-light text-juno-navy/60 hover:text-juno-navy transition-colors group">
-                <div className="w-16 h-16 rounded-full bg-juno-navy/5 flex items-center justify-center group-hover:bg-juno-navy group-hover:text-juno-bg transition-all duration-500">
-                  <Phone className="w-6 h-6" />
-                </div>
-                +91 00000 00000
+                info.clubjuno@gmail.com
               </a>
             </div>
           </div>
@@ -70,9 +54,15 @@ const Contact = () => {
           <div className="gsap-reveal">
             <h3 className="text-xl font-display font-bold text-juno-navy mb-6 uppercase tracking-widest">Follow the Journey</h3>
             <div className="flex justify-center gap-8">
-              <Instagram className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
-              <Twitter className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
-              <Facebook className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
+              <a href="https://www.instagram.com/experiencejuno?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer">
+                <Instagram className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61578476350934" target="_blank" rel="noreferrer">
+                <Facebook className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
+              </a>
+              <a href="https://www.linkedin.com/company/experiencejuno/" target="_blank" rel="noreferrer">
+                <Linkedin className="w-8 h-8 text-juno-navy/40 hover:text-juno-navy cursor-pointer transition-all duration-500 hover:scale-110" />
+              </a>
             </div>
           </div>
 

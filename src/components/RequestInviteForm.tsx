@@ -1,222 +1,337 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { X, ArrowRight, ArrowLeft, Loader2, Check } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
-import toast from 'react-hot-toast';
-import { X, Loader2, ArrowRight, ArrowLeft } from 'lucide-react';
 
 type Props = { 
   open: boolean; 
   onClose: () => void;
 };
 
+const EXPERIENCES = [
+  "Pottery & Craft",
+  "Food & Culinary Culture",
+  "Wellness & Reflection",
+  "Nature & Slow Travel",
+  "Music & Cultural Immersion",
+  "Creative Workshops"
+];
+
 export default function RequestInviteForm({ open, onClose }: Props) {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  // Form State
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
+    name: '',
+    age: '',
+    gender: '',
     phone: '',
-    sex: '',
-    tripInterest: '',
-    message: ''
+    email: '',
+    state: '',
+    instagram: '',
+    occupation: '',
+    hobbies: '',
+    experiences: [] as string[],
+    whyJuno: '',
+    seekingThroughTravel: ''
   });
 
-  const nextStep = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!formData.fullName || !formData.email || !formData.phone) {
-      toast.error('Please fill all required fields in this step');
-      return;
-    }
-    setStep(2);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const prevStep = () => setStep(1);
+  const handleExperienceToggle = (exp: string) => {
+    setFormData(prev => {
+      const current = prev.experiences;
+      if (current.includes(exp)) {
+        return { ...prev, experiences: current.filter(e => e !== exp) };
+      }
+      if (current.length < 3) {
+        return { ...prev, experiences: [...current, exp] };
+      }
+      return prev;
+    });
+  };
+
+  const isStep1Valid = formData.name && formData.age && formData.gender && formData.phone && formData.email && formData.state;
+  const isStep2Valid = formData.instagram && formData.occupation && formData.hobbies;
+  const isStep3Valid = formData.experiences.length > 0 && formData.experiences.length <= 3 && formData.whyJuno && formData.seekingThroughTravel;
+
+  const handleNext = () => {
+    if (step === 1 && isStep1Valid) setStep(2);
+    else if (step === 2 && isStep2Valid) setStep(3);
+  };
+
+  const handlePrev = () => {
+    if (step > 1) setStep(step - 1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.sex || !formData.tripInterest) {
-      toast.error('Please fill all required fields');
-      return;
-    }
+    if (!isStep3Valid) return;
     
     setSubmitting(true);
-    try {
-      const finalMessage = formData.message 
-        ? `Gender: ${formData.sex}\n\n${formData.message}` 
-        : `Gender: ${formData.sex}`;
+    setError('');
 
-      await addDoc(collection(db, 'requestInvites'), {
-        fullName: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        tripInterest: formData.tripInterest,
-        message: finalMessage,
+    try {
+      await addDoc(collection(db, 'invite_requests_v2'), {
+        ...formData,
+        age: Number(formData.age),
+        status: 'pending',
         timestamp: serverTimestamp()
       });
-      toast.success("Successfully submitted. We'll get back to you soon.");
-      onClose();
-      // Reset form after close animation
+      setSuccess(true);
       setTimeout(() => {
-        setStep(1);
-        setFormData({ fullName: '', email: '', phone: '', sex: '', tripInterest: '', message: '' });
-      }, 300);
-    } catch (error: any) {
-      console.error(error);
-      toast.error('Failed to submit request: Insufficient Permissions or network error.');
+        handleClose();
+      }, 3000);
+    } catch (err: any) {
+      console.error('Error submitting form:', err);
+      setError('Something went wrong. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Variants for fluid slide animation
-  const variants = {
-    enter: (direction: number) => {
-      return {
-        x: direction > 0 ? 100 : -100,
-        opacity: 0,
-        position: 'absolute' as const
-      };
-    },
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      position: 'relative' as const
-    },
-    exit: (direction: number) => {
-      return {
-        zIndex: 0,
-        x: direction < 0 ? 100 : -100,
-        opacity: 0,
-        position: 'absolute' as const
-      };
-    }
+  const handleClose = () => {
+    setSuccess(false);
+    setStep(1);
+    setFormData({
+      name: '', age: '', gender: '', phone: '', email: '', state: '',
+      instagram: '', occupation: '', hobbies: '', experiences: [],
+      whyJuno: '', seekingThroughTravel: ''
+    });
+    setError('');
+    onClose();
   };
-
-  const direction = step === 1 ? -1 : 1;
 
   return (
     <AnimatePresence>
       {open && (
-        <motion.div className="fixed inset-0 z-[600] flex items-center justify-center p-4 sm:p-6 text-left">
-          <motion.div 
-            className="absolute inset-0 bg-juno-navy/80 backdrop-blur-sm" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            onClick={onClose} 
-          />
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-            animate={{ opacity: 1, scale: 1, y: 0 }} 
-            exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-            className="relative w-full max-w-lg bg-juno-bg rounded-[28px] shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-juno-bg/80 backdrop-blur-sm overflow-y-auto"
+        >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+            className="bg-juno-bg border border-juno-navy/10 shadow-2xl rounded-2xl w-full max-w-2xl relative my-8"
           >
-            <div className="p-6 sm:p-8 bg-juno-navy text-juno-bg flex justify-between items-start shrink-0">
-              <div>
-                <h2 className="text-2xl font-display font-bold mb-2">Request an Invite</h2>
-                <div className="flex items-center gap-2 text-juno-sand/80 text-xs font-bold uppercase tracking-widest">
-                  <span>Step {step} of 2</span>
-                  <div className="flex gap-1">
-                    <div className={`w-8 h-1 rounded-full ${step >= 1 ? 'bg-juno-sand' : 'bg-juno-sand/20'}`}></div>
-                    <div className={`w-8 h-1 rounded-full ${step >= 2 ? 'bg-juno-sand' : 'bg-juno-sand/20'}`}></div>
-                  </div>
-                </div>
+            <button
+              onClick={handleClose}
+              className="absolute right-4 top-4 p-2 text-juno-navy/60 hover:text-juno-navy rounded-full hover:bg-black/5 transition-colors z-10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-8 md:p-12">
+              <div className="mb-8 text-center">
+                <h2 className="text-3xl md:text-4xl font-display text-juno-navy mb-3">Request an Invite</h2>
+                <p className="text-juno-navy/60 text-sm md:text-base">
+                  Tell us a bit about yourself to join our curated community.
+                </p>
               </div>
-              <button 
-                onClick={onClose} 
-                className="p-2 hover:bg-white/10 rounded-full transition-colors shrink-0"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="p-6 sm:p-8 overflow-y-auto relative min-h-[420px] flex flex-col">
-              <form onSubmit={step === 2 ? handleSubmit : (e) => e.preventDefault()} className="flex-1 flex flex-col relative">
-                <AnimatePresence initial={false} custom={direction}>
-                  
+
+              {/* Progress Bar */}
+              {!success && (
+                <div className="flex gap-2 mb-8">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                        step >= i ? 'bg-juno-ochre' : 'bg-juno-navy/10'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg text-sm text-center">
+                  {error}
+                </div>
+              )}
+
+              {success ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-12"
+                >
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Check className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-display text-juno-navy mb-4">Request Submitted</h3>
+                  <p className="text-juno-navy/60">
+                    Thank you for your interest in JUNO. We will review your application and get back to you soon.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Step 1: Basic Info */}
                   {step === 1 && (
                     <motion.div
                       key="step1"
-                      custom={direction}
-                      variants={variants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
-                      className="w-full space-y-5"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-6"
                     >
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Full Name *</label>
-                        <input required type="text" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors" placeholder="Jane Doe" />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Email Address *</label>
-                        <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors" placeholder="jane@example.com" />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Phone Number *</label>
-                        <input required type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors" placeholder="+91 98765 43210" />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Full Name</label>
+                          <input required type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="John Doe" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Age</label>
+                          <input required type="number" name="age" min="18" max="100" value={formData.age} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="25" />
+                        </div>
                       </div>
 
-                      <div className="pt-6">
-                        <button onClick={nextStep} className="w-full bg-juno-navy text-juno-bg rounded-xl py-4 flex justify-center items-center gap-2 font-bold tracking-widest uppercase text-xs hover:bg-juno-navy/90 focus:ring-2 outline-none focus:ring-juno-ochre transition-all shadow-md">
-                          Next Step <ArrowRight className="w-4 h-4" />
-                        </button>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Email Address</label>
+                          <input required type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="john@example.com" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Phone Number</label>
+                          <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="+91 98765 43210" />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Gender</label>
+                          <select required name="gender" value={formData.gender} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors appearance-none">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Non-binary">Non-binary</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">State / City</label>
+                          <input required type="text" name="state" value={formData.state} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="Maharashtra" />
+                        </div>
                       </div>
                     </motion.div>
                   )}
 
+                  {/* Step 2: Profile Details */}
                   {step === 2 && (
                     <motion.div
                       key="step2"
-                      custom={direction}
-                      variants={variants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
-                      className="w-full space-y-5"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-6"
                     >
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Gender *</label>
-                        <select required value={formData.sex} onChange={(e) => setFormData({...formData, sex: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors appearance-none">
-                          <option value="" disabled>Select gender</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
-                          <option value="Prefer Not to Say">Prefer Not to Say</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Trip Interest *</label>
-                        <select required value={formData.tripInterest} onChange={(e) => setFormData({...formData, tripInterest: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors appearance-none">
-                          <option value="" disabled>Select a journey</option>
-                          <option value="Khurja Craft Immersion">Clay Day - Khurja Craft Immersion</option>
-                          <option value="Khurja Trip">Khurja Trip</option>
-                          <option value="General Inquiry">General Invite / Waitlist</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-widest text-juno-navy/60 font-bold mb-2">Message (Optional)</label>
-                        <textarea rows={3} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-transparent border border-juno-navy/20 rounded-xl px-4 py-3 text-juno-navy text-sm outline-none focus:border-juno-ochre transition-colors resize-none" placeholder="Tell us what you're looking for..." />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Instagram Handle</label>
+                          <input required type="text" name="instagram" value={formData.instagram} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="@username" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Occupation</label>
+                          <input required type="text" name="occupation" value={formData.occupation} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="Designer, Engineer, etc." />
+                        </div>
                       </div>
 
-                      <div className="pt-6 flex gap-3">
-                        <button type="button" onClick={prevStep} className="px-5 bg-transparent border border-juno-navy/20 text-juno-navy rounded-xl py-4 flex justify-center items-center hover:bg-juno-navy/5 focus:ring-2 outline-none focus:ring-juno-ochre transition-all">
-                          <ArrowLeft className="w-4 h-4" />
-                        </button>
-                        <button type="submit" disabled={submitting} className="flex-1 bg-juno-navy text-juno-bg rounded-xl py-4 flex justify-center items-center gap-2 font-bold tracking-widest uppercase text-xs hover:bg-juno-navy/90 focus:ring-2 outline-none focus:ring-juno-ochre transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md">
-                          {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Request"}
-                        </button>
+                      <div>
+                        <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Name 2 Hobbies of yours</label>
+                        <input required type="text" name="hobbies" value={formData.hobbies} onChange={handleInputChange} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors" placeholder="Photography, Reading" />
                       </div>
                     </motion.div>
                   )}
 
-                </AnimatePresence>
-              </form>
+                  {/* Step 3: Travel Preferences */}
+                  {step === 3 && (
+                    <motion.div
+                      key="step3"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-8"
+                    >
+                      <div>
+                        <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-4">
+                          Which of these experiences resonate most with you? *
+                          <span className="block text-[#a0a0a0] normal-case tracking-normal mt-1">Make between 1 and 3 choices</span>
+                        </label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {EXPERIENCES.map((exp) => {
+                            const isSelected = formData.experiences.includes(exp);
+                            const isDisabled = !isSelected && formData.experiences.length >= 3;
+                            return (
+                              <button
+                                type="button"
+                                key={exp}
+                                onClick={() => handleExperienceToggle(exp)}
+                                disabled={isDisabled}
+                                className={`p-4 text-left border rounded-xl transition-all flex items-center justify-between
+                                  ${isSelected 
+                                    ? 'border-juno-ochre bg-juno-ochre/5 text-juno-navy' 
+                                    : 'border-juno-navy/10 text-juno-navy/70 hover:border-juno-navy/30'
+                                  }
+                                  ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+                                `}
+                              >
+                                <span className="text-sm">{exp}</span>
+                                {isSelected && <Check className="w-4 h-4 text-juno-ochre" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">Why do you want to join JUNO?</label>
+                        <textarea required name="whyJuno" value={formData.whyJuno} onChange={handleInputChange} rows={3} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors resize-none" placeholder="Tell us what draws you to our experiences..." />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold tracking-wider text-juno-navy/70 uppercase mb-2">In one sentence, what are you currently seeking through travel?</label>
+                        <textarea required name="seekingThroughTravel" value={formData.seekingThroughTravel} onChange={handleInputChange} rows={2} className="w-full bg-transparent border-b border-juno-navy/20 py-3 text-juno-navy focus:border-juno-ochre focus:outline-none transition-colors resize-none" placeholder="Type your answer here..." />
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Navigation Buttons */}
+                  <div className="pt-6 mt-8 border-t border-juno-navy/10 flex gap-4">
+                    {step > 1 && (
+                      <button type="button" onClick={handlePrev} className="px-6 py-4 border border-juno-navy/20 text-juno-navy rounded-xl hover:bg-black/5 transition-colors flex items-center justify-center">
+                        <ArrowLeft className="w-4 h-4" />
+                      </button>
+                    )}
+                    
+                    {step < 3 ? (
+                      <button 
+                        type="button" 
+                        onClick={handleNext} 
+                        disabled={(step === 1 && !isStep1Valid) || (step === 2 && !isStep2Valid)}
+                        className="flex-1 bg-juno-navy text-juno-bg rounded-xl py-4 flex justify-center items-center gap-2 font-bold tracking-widest uppercase text-xs hover:bg-juno-navy/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Next Step <ArrowRight className="w-4 h-4" />
+                      </button>
+                    ) : (
+                      <button 
+                        type="submit" 
+                        disabled={submitting || !isStep3Valid}
+                        className="flex-1 bg-juno-ochre text-white rounded-xl py-4 flex justify-center items-center gap-2 font-bold tracking-widest uppercase text-xs hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Submit Request'}
+                      </button>
+                    )}
+                  </div>
+                </form>
+              )}
             </div>
           </motion.div>
         </motion.div>

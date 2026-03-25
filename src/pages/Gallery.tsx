@@ -65,17 +65,23 @@ const HEIGHT_PX: Record<CardHeight, number> = {
 };
 
 const galleryImages: Record<string, { default: string }> = import.meta.glob(
-  "../assets/gallery/*.{png,jpg,jpeg,webp}",
+  ["../assets/gallery/*.{png,jpg,jpeg,webp}", "../asset/*.{png,jpg,jpeg,webp}"],
   { eager: true }
 );
 
-const LOCAL_ITEMS: GalleryItem[] = Object.values(galleryImages).map((mod, i) => {
-  const original = ITEMS[i % ITEMS.length];
-  return {
-    ...original,
-    id: i + 1,
-    src: mod.default || (mod as any),
-  };
+const LOCAL_ITEMS: GalleryItem[] = Object.values(galleryImages)
+  .filter(mod => {
+    // optional: filter out UI specific files like logo or background images if desired
+    const path = (mod as any).default || String(mod);
+    return !path.includes('is_it_for_u') && !path.includes('logo');
+  })
+  .map((mod, i) => {
+    const original = ITEMS[i % ITEMS.length];
+    return {
+      ...original,
+      id: i + 1,
+      src: (mod as any).default || String(mod),
+    };
 });
 
 // ─── Skeleton Card ─────────────────────────────────────────────────────────────

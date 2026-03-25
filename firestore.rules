@@ -52,6 +52,25 @@ service cloud.firestore {
              data.timestamp is timestamp;
     }
 
+    function isValidInviteRequestV2(data) {
+      let requiredFields = ['name', 'age', 'gender', 'phone', 'email', 'state', 'instagram', 'occupation', 'hobbies', 'experiences', 'whyJuno', 'seekingThroughTravel', 'status', 'timestamp'];
+      return data.keys().hasAll(requiredFields) &&
+             data.name is string && data.name.size() >= 2 &&
+             data.age is number && data.age >= 18 &&
+             data.gender is string &&
+             data.phone is string && data.phone.size() >= 5 &&
+             isValidEmail(data.email) &&
+             data.state is string &&
+             data.instagram is string &&
+             data.occupation is string &&
+             data.hobbies is string &&
+             data.experiences is list && data.experiences.size() >= 1 && data.experiences.size() <= 3 &&
+             data.whyJuno is string &&
+             data.seekingThroughTravel is string &&
+             data.status == 'pending' &&
+             data.timestamp is timestamp;
+    }
+
     function isValidWaitlist(data) {
       return data.keys().hasAll(['email', 'createdAt']) &&
              data.keys().hasOnly(['email', 'createdAt']) &&
@@ -89,6 +108,12 @@ service cloud.firestore {
 
     match /requestInvites/{requestId} {
       allow create: if isValidRequestInvite(request.resource.data);
+      allow read: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    match /invite_requests_v2/{requestId} {
+      allow create: if isValidInviteRequestV2(request.resource.data);
       allow read: if isAdmin();
       allow update, delete: if isAdmin();
     }
