@@ -111,7 +111,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
           <div className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={logo} alt="Juno" className={`w-full h-full object-cover scale-[1.8] transition-all duration-500 ${isLightText ? 'brightness-0 invert opacity-90' : ''}`} />
+            <img src={logo} alt="Juno" className={`w-full h-full object-cover scale-[1.8] transition-all duration-500`} />
           </div>
           <span className={`text-[12px] md:text-sm font-bold tracking-[0.25em] uppercase transition-colors duration-500 ${isLightText ? 'text-white' : 'text-juno-navy'}`}>JUNO</span>
         </Link>
@@ -188,7 +188,7 @@ const Footer = () => {
       <div className="col-span-1 md:col-span-2">
         <div className="flex items-center gap-4 mb-10">
           <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8] brightness-0 invert opacity-80" />
+            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8]" />
           </div>
           <span className="text-2xl font-bold tracking-[0.25em] text-white/80">JUNO</span>
         </div>
@@ -233,7 +233,7 @@ const Footer = () => {
       <div className="flex items-center gap-3">
         <span className="text-juno-sand/40">Curated with Intention</span>
         <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center ml-4">
-          <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8] brightness-0 invert opacity-50" />
+          <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8]" />
         </div>
       </div>
     </div>
