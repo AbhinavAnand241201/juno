@@ -85,7 +85,7 @@ const LOCAL_ITEMS: GalleryItem[] = Object.values(galleryImages)
 });
 
 // ─── Skeleton Card ─────────────────────────────────────────────────────────────
-function SkeletonCard({ height }: { height: number; key?: React.Key }) {
+function SkeletonCard({ height, style = {} }: { height: number; style?: React.CSSProperties; key?: React.Key }) {
   return (
     <div
       style={{
@@ -95,6 +95,7 @@ function SkeletonCard({ height }: { height: number; key?: React.Key }) {
         background: T.sandLight,
         position: "relative",
         marginBottom: 16,
+        ...style,
       }}
     >
       <div
@@ -174,16 +175,30 @@ function GalleryCard({ item }: { item: GalleryItem; key?: React.Key }) {
           : `0 4px 18px rgba(28,53,84,0.10)`,
       }}
     >
-      {/* skeleton while loading */}
-      {!loaded && <SkeletonCard height={h} />}
+      {/* skeleton layer */}
+      <div 
+        style={{ 
+          position: "absolute", 
+          inset: 0, 
+          zIndex: 1, 
+          opacity: loaded ? 0 : 1, 
+          pointerEvents: "none", 
+          transition: "opacity 0.4s ease" 
+        }}
+      >
+        <SkeletonCard height={h} style={{ marginBottom: 0 }} />
+      </div>
 
       {/* actual image */}
       <div
         style={{
           height: h,
           overflow: "hidden",
-          display: loaded ? "block" : "none",
           position: "relative",
+          zIndex: 0,
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.4s ease",
+          width: "100%",
         }}
       >
         <img

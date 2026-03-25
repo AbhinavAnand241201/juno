@@ -115,14 +115,16 @@ export default function RequestInviteForm({ open, onClose }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-juno-bg/80 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-50 overflow-y-auto bg-juno-bg/80 backdrop-blur-sm"
+          data-lenis-prevent="true"
         >
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 20 }}
-            className="bg-juno-bg border border-juno-navy/10 shadow-2xl rounded-2xl w-full max-w-2xl relative my-8"
-          >
+          <div className="flex min-h-full items-center justify-center p-4 py-12">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="bg-juno-bg border border-juno-navy/10 shadow-2xl rounded-2xl w-full max-w-2xl relative"
+            >
             <button
               onClick={handleClose}
               className="absolute right-4 top-4 p-2 text-juno-navy/60 hover:text-juno-navy rounded-full hover:bg-black/5 transition-colors z-10"
@@ -334,6 +336,7 @@ export default function RequestInviteForm({ open, onClose }: Props) {
               )}
             </div>
           </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

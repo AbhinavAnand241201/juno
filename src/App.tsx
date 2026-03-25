@@ -42,7 +42,12 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
   
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const w = window as any;
+    if (w.lenis) {
+      w.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
     // Refresh ScrollTrigger after route change and a small delay for DOM updates
     const timer = setTimeout(() => {
       import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
@@ -245,6 +250,8 @@ export default function App() {
       wheelMultiplier: 0.95,
       touchMultiplier: 1.1,
     });
+    
+    (window as any).lenis = lenis;
 
     let rafId = 0;
     const raf = (time: number) => {
