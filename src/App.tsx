@@ -32,6 +32,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Invite from './pages/Invite';
 import TripDetail from './pages/TripDetail';
 import Blogs from './pages/Blogs';
+import BlogPostDetail from './pages/BlogPostDetail';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
@@ -110,8 +111,8 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={logo} alt="Juno" className={`w-full h-full object-cover scale-[1.8] transition-all duration-500`} />
+          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden flex items-center justify-center bg-transparent border-none">
+            <img src={logo} alt="Juno" className={`w-full h-full object-cover scale-[2.4] rounded-full transition-all duration-500`} />
           </div>
           <span className={`text-[12px] md:text-sm font-bold tracking-[0.25em] uppercase transition-colors duration-500 ${isLightText ? 'text-white' : 'text-juno-navy'}`}>JUNO</span>
         </Link>
@@ -183,12 +184,12 @@ const Footer = () => {
   if (location.pathname.startsWith('/admin')) return null;
 
   return (
-  <footer className="bg-[#0D1B2A] text-juno-footer-text py-24 md:py-32 px-6 md:px-12 overflow-hidden transition-colors duration-500 border-t-4 border-juno-ochre/20">
+  <footer className="bg-[#0D1B2A] text-juno-footer-text py-24 md:py-32 px-6 md:px-12 overflow-hidden transition-colors duration-500">
     <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-24">
       <div className="col-span-1 md:col-span-2">
         <div className="flex items-center gap-4 mb-10">
-          <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8]" />
+          <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-transparent border-none">
+            <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[2.4] rounded-full" />
           </div>
           <span className="text-2xl font-bold tracking-[0.25em] text-white/80">JUNO</span>
         </div>
@@ -232,8 +233,8 @@ const Footer = () => {
       <span>© 2026 JUNO Experiential Journeys</span>
       <div className="flex items-center gap-3">
         <span className="text-juno-sand/40">Curated with Intention</span>
-        <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center ml-4">
-          <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[1.8]" />
+        <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center ml-4 bg-transparent border-none">
+          <img src={logo} alt="Juno" className="w-full h-full object-cover scale-[2.4] rounded-full" />
         </div>
       </div>
     </div>
@@ -281,6 +282,7 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blog/:id" element={<BlogPostDetail />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/invite" element={<Invite />} />

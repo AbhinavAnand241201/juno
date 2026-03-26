@@ -80,7 +80,7 @@ const FAQ = () => {
     },
     {
       question: "How small is small?",
-      answer: "Twelve. That's the ceiling. We won't cross it.",
+      answer: "We keep our journeys intimate. It's not about the number; it's about the connection.",
       category: 'Experience'
     },
     {
@@ -197,7 +197,7 @@ const FAQ = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16 gsap-reveal">
           {[
             { title: 'Response Time', value: '<24 hrs' },
-            { title: 'Avg Group Size', value: '10-12' },
+            { title: 'Support', value: 'Curated' },
             { title: 'Host Support', value: '24/7' }
           ].map((stat) => (
             <motion.div

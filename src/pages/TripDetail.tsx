@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, MapPin, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, Clock, Globe } from 'lucide-react';
 import RequestInviteForm from '../components/RequestInviteForm';
 
 // Import local image assets for itineraries
@@ -40,7 +40,6 @@ export default function TripDetail() {
   const trip = slug ? tripsData[slug] : null;
   const [open, setOpen] = useState(false);
 
-
   if (!trip) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-juno-bg p-6">
@@ -51,68 +50,156 @@ export default function TripDetail() {
   }
 
   return (
-    <div className="bg-juno-bg min-h-screen relative font-sans flex items-center justify-center pt-24 pb-12 px-6">
+    <div className="bg-juno-bg min-h-screen pt-32 pb-24 px-6 md:px-12">
       <RequestInviteForm open={open} onClose={() => setOpen(false)} />
       
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 h-full lg:h-[80vh]">
-        
-        {/* Left Side: Blurred Itinerary Image */}
-        <div className="lg:col-span-8 relative rounded-3xl overflow-hidden shadow-xl border border-juno-sand/20 group h-[50vh] lg:h-full">
-          <img 
-            src={trip.image} 
-            alt="Itinerary Details" 
-            className="w-full h-full object-cover blur-sm transition-all duration-700 opacity-90 scale-105"
-          />
-          <div className="absolute inset-0 bg-juno-navy/20 flex flex-col items-center justify-center p-8 text-center backdrop-blur-[2px]">
-            <span className="text-xs uppercase tracking-[0.3em] font-bold text-juno-bg mb-4 block drop-shadow-md">Exclusive Itinerary Preview</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white drop-shadow-lg mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
-              {trip.title}
-            </h1>
-            <p className="text-white/90 italic font-light drop-shadow text-lg max-w-lg mb-8">
-              {trip.subtitle}
-            </p>
-            
-            <div className="flex items-center gap-6 text-white text-sm font-medium tracking-wide drop-shadow">
-              <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> {trip.duration}</span>
-              <span className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {trip.location}</span>
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <Link to="/" className="inline-flex items-center gap-2 text-juno-navy/60 hover:text-juno-navy transition-colors text-xs font-bold uppercase tracking-widest">
+            <ArrowLeft className="w-4 h-4" /> Go Back
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          {/* Main Content Area */}
+          <div className="lg:col-span-8">
+            <div className="mb-12">
+              <h1 className="text-4xl md:text-6xl font-display font-bold text-juno-navy mb-6" style={{ fontFamily: '"Playfair Display", serif' }}>
+                {trip.title}
+              </h1>
+              <p className="text-xl text-juno-navy/60 font-light italic mb-8">
+                {trip.subtitle}
+              </p>
+              
+              <div className="flex flex-wrap gap-8 py-6 border-y border-juno-navy/10 text-sm font-medium text-juno-navy">
+                <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-juno-ochre" /> {trip.duration}</span>
+                <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-juno-ochre" /> {trip.location}</span>
+                <span className="flex items-center gap-2"><Globe className="w-4 h-4 text-juno-ochre" /> Curated Experience</span>
+              </div>
+            </div>
+
+            <div className="rounded-3xl overflow-hidden mb-16 shadow-lg aspect-video max-w-2xl">
+              <img 
+                src={trip.image} 
+                alt={trip.title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="space-y-16">
+              <section>
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">About This Experience</h2>
+                <div className="prose prose-lg text-juno-navy/70 font-light leading-relaxed space-y-4">
+                  <p>Just beyond Delhi lies Khurja, a town where clay has shaped stories for generations.</p>
+                  <p>This isn’t a sightseeing trip. It’s a chance to step into a working craft culture, meet the people behind it, and create something with your own hands.</p>
+                  <p>Expect a day that feels slower, more tactile, and unexpectedly rewarding.</p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">What You’ll Experience</h2>
+                <div className="bg-juno-sand/5 p-8 rounded-3xl border border-juno-sand/20">
+                  <p className="mb-6 font-medium text-juno-navy">A curated day of discovery, craft, and connection.</p>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      'Meet local artisans',
+                      'Step inside real pottery workshops',
+                      'Try shaping clay yourself',
+                      'Spend time exploring the heart of Khurja'
+                    ].map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-juno-navy/70">
+                        <div className="w-1.5 h-1.5 rounded-full bg-juno-ochre" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-6 italic text-sm text-juno-navy/40">The rest, we’ll leave for you to experience.</p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">What’s Included</h2>
+                <ul className="space-y-4">
+                  {[
+                    'Travel from Delhi and back',
+                    'Access to pottery studios and workshops',
+                    'Hands-on craft experience',
+                    'Meals and refreshments',
+                    'Support from the JUNO team',
+                    'A small keepsake from the day'
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-4 text-juno-navy/70 border-b border-juno-navy/5 pb-4">
+                      <ArrowRight className="w-4 h-4 text-juno-ochre" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="bg-juno-navy text-juno-bg p-12 rounded-[3rem] text-center">
+                <h2 className="text-2xl md:text-3xl font-display font-bold mb-6">Why Join</h2>
+                <p className="text-xl md:text-2xl font-light italic mb-10 opacity-80">
+                  "Because sometimes the best way to understand a place<br />
+                  is to make something in it."
+                </p>
+                <button 
+                  onClick={() => setOpen(true)}
+                  className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-juno-ochre text-juno-navy rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white transition-all duration-300"
+                >
+                  Request an Invitation <ArrowRight className="w-4 h-4" />
+                </button>
+              </section>
             </div>
           </div>
 
-          <div className="absolute top-6 left-6 z-10">
-            <Link to="/" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest bg-black/20 hover:bg-black/40 px-5 py-3 rounded-full backdrop-blur-md shadow">
-              <ArrowLeft className="w-4 h-4" /> Go Back
-            </Link>
-          </div>
-        </div>
+          {/* Sticky Sidebar / Itinerary Preview */}
+          <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit">
+            <div className="relative rounded-[2.5rem] overflow-hidden bg-juno-navy p-10 shadow-2xl">
+              <div className="absolute inset-0 opacity-20 pointer-events-none">
+                <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(232,169,74,0.15),transparent_70%)]" />
+              </div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 mb-8 mx-auto">
+                  <span className="text-white font-display text-2xl font-bold">J</span>
+                </div>
+                
+                <h3 className="text-xl font-display font-bold text-white mb-8 text-center uppercase tracking-widest">
+                  Preview Itinerary
+                </h3>
+                
+                <div className="space-y-6 blur-[6px] select-none opacity-40">
+                  {[
+                    { time: '08:00 AM', event: 'Departure from New Delhi' },
+                    { time: '10:30 AM', event: 'Arrival and Artisan Greeting' },
+                    { time: '11:30 AM', event: 'Studio Workshop Session I' },
+                    { time: '01:30 PM', event: 'Farm-to-Table Traditional Lunch' },
+                    { time: '03:00 PM', event: 'Guided Market Exploration' },
+                    { time: '05:00 PM', event: 'Evening Tea and Reflection' },
+                    { time: '06:30 PM', event: 'Return Journey Begins' },
+                  ].map((step, i) => (
+                    <div key={i} className="flex gap-4 border-l border-white/20 pl-4">
+                      <div className="text-[10px] font-bold text-juno-sand shrink-0">{step.time}</div>
+                      <div className="text-sm text-white/80">{step.event}</div>
+                    </div>
+                  ))}
+                </div>
 
-        {/* Right Side: Request Invite Form Option */}
-        <div className="lg:col-span-4 flex flex-col justify-center">
-          <div className="bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-juno-navy/10 border border-juno-sand/30">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-juno-navy/5 mb-8 mx-auto">
-              <span className="text-juno-navy font-display text-3xl font-bold" style={{ fontFamily: '"Playfair Display", serif' }}>J</span>
+                <div className="mt-12 text-center">
+                  <p className="text-white/60 text-xs font-light mb-8">
+                    Unlock the full schedule and exclusive details by joining our community.
+                  </p>
+                  <button 
+                    onClick={() => setOpen(true)}
+                    className="w-full py-4 bg-white text-juno-navy rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-juno-sand transition-colors"
+                  >
+                    View Full Details
+                  </button>
+                </div>
+              </div>
             </div>
-            
-            <h3 className="text-2xl font-display font-bold text-juno-navy mb-4 text-center leading-tight">
-              Ready to unlock the full journey?
-            </h3>
-            
-            <p className="text-juno-navy/60 font-light text-center leading-relaxed mb-10 text-sm">
-              Our full itineraries are shared exclusively with invited guests to maintain the intimacy and surprise of the experience. Request an invite to view complete details, dates, and pricing.
-            </p>
-            
-            <button 
-              onClick={() => setOpen(true)}
-              className="w-full flex items-center justify-center gap-3 py-5 bg-juno-navy text-juno-bg rounded-[999px] text-xs font-bold uppercase tracking-[0.2em] group shadow-lg hover:bg-juno-ochre transition-all duration-300"
-            >
-              Request Full Invite <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-            
-            <p className="text-center text-[10px] uppercase tracking-widest text-juno-navy/40 mt-6 font-bold">
-              Secure & Private Request
-            </p>
           </div>
         </div>
-        
       </div>
     </div>
   );

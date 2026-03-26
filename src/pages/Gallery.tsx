@@ -313,19 +313,6 @@ function GalleryCard({ item }: { item: GalleryItem; key?: React.Key }) {
           >
             {item.location}
           </div>
-          <div
-            style={{
-              color: "rgba(255,255,255,0.7)",
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              marginTop: 4,
-            }}
-          >
-            {item.country}
-          </div>
         </div>
       </div>
     </div>

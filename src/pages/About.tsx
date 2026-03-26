@@ -182,7 +182,7 @@ const About = () => {
               "Because presence can't be scaled."
             </p>
             <p>
-              When you keep a group small, something shifts. Conversations go deeper. The artisan opens up. The experience stops being a program and starts being a memory.
+              When you travel with intention, something shifts. Conversations go deeper. The artisan opens up. The experience stops being a program and starts being a memory.
             </p>
             <p>
               Every person in a JUNO journey is there by choice and by fit — not first-come-first-served. That's how we protect the integrity of what we've built.
@@ -248,7 +248,7 @@ const About = () => {
             />
             <AccordionItem 
               question="What makes JUNO different from a travel agency?" 
-              answer="We are curators, not agents. We don't just book trips; we design intentional experiences. Our journeys are invite-only, small-group (max 12), and focused on cultural depth and creative integrity, removing the friction between you and the extraordinary."
+              answer="We are curators, not agents. We don't just book trips; we design intentional experiences. Our journeys are invite-only and focused on cultural depth and creative integrity, removing the friction between you and the extraordinary."
             />
           </div>
 

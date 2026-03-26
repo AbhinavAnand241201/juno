@@ -132,7 +132,7 @@ const Home = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="hero-section relative h-[100vh] flex items-center justify-center overflow-hidden">
+      <section className="hero-section relative h-[100vh] flex items-center justify-center overflow-hidden pt-20">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
           <video
@@ -200,40 +200,12 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="relative">
-              {/* Animated floating cards */}
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="bg-white rounded-3xl p-8 shadow-xl border border-juno-sand/20 mb-6"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-juno-ochre/20 flex items-center justify-center">
-                    <Compass className="w-5 h-5 text-juno-ochre" />
-                  </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-widest text-juno-navy/50 font-bold">Experience</div>
-                    <div className="text-juno-navy font-bold">Immersive Craft</div>
-                  </div>
-                </div>
-                <p className="text-juno-navy/60 text-sm font-light">Shape clay, cook local food, learn ancient crafts — truly hands-on.</p>
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                className="bg-juno-navy rounded-3xl p-8 shadow-xl ml-8"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-juno-sand/20 flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-juno-sand" />
-                  </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-widest text-juno-sand/50 font-bold">Community</div>
-                    <div className="text-white font-bold">Small Groups, Deep Bonds</div>
-                  </div>
-                </div>
-                <p className="text-juno-bg/60 text-sm font-light">Max 12 people per journey. Every group is intentionally curated.</p>
-              </motion.div>
+            <div className="relative rounded-[2rem] overflow-hidden aspect-[4/3] shadow-2xl">
+              <img 
+                src={gallery1} 
+                alt="Juno Experience" 
+                className="w-full h-full object-cover"
+              />
             </div>
           </motion.div>
         </div>
@@ -271,7 +243,7 @@ const Home = () => {
                 <pillar.icon className="w-6 h-6" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-bold mb-4 tracking-widest uppercase">{pillar.title}</h3>
-              <p className="text-juno-bg/60 font-light leading-relaxed text-sm md:text-base">{pillar.desc}</p>
+                <p className="text-juno-bg/60 text-sm font-light">Every journey is intentionally curated for depth and connection.</p>
             </motion.div>
           ))}
         </div>
@@ -286,10 +258,7 @@ const Home = () => {
               Ready to make something real? Join us on our next journey and unlock an experience the city could never give you.
             </p>
           </div>
-          <Link to="/gallery" className="group text-xs font-bold tracking-widest uppercase text-juno-navy hover:text-juno-ochre transition-colors flex items-center gap-2">
-            View Gallery <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-          </Link>
-        </div>
+          </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Khurja Trip Card */}
@@ -324,8 +293,8 @@ const Home = () => {
             <ul className="space-y-6">
               {[
                 'Vetted transport & stays',
-                'Minimal group per journey',
-                'Fair exchange with artisan communities'
+                'Curated artisan communities',
+                'Fair exchange and respectful travel'
               ].map((item) => (
                 <li key={item} className="flex items-center gap-4 text-sm md:text-base font-medium text-juno-navy">
                   <div className="w-6 h-6 rounded-full bg-juno-navy text-juno-bg flex items-center justify-center text-[10px] shrink-0">✓</div>
@@ -373,15 +342,15 @@ const Home = () => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="absolute inset-0 bg-juno-navy/70" />
+        <div className="absolute inset-0 bg-juno-navy/60" />
         <div className="relative z-10 max-w-4xl mx-auto gsap-reveal">
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-bold mb-12 leading-tight -translate-y-8">
             This isn't for everyone. <br />
             <span className="italic text-juno-sand">Is it for you?</span>
           </h2>
           <button
             onClick={() => setBookingOpen(true)}
-            className="btn-hover-effect inline-flex px-14 py-6 bg-juno-bg text-juno-navy text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300"
+            className="btn-hover-effect inline-flex px-14 py-6 bg-juno-bg text-juno-navy text-sm font-bold tracking-widest uppercase rounded-[999px] hover:shadow-2xl transition-all duration-300 translate-y-8"
           >
             Request an Invitation
           </button>
