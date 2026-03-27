@@ -74,7 +74,7 @@ const About = () => {
     // Image zoom effect on scroll
     gsap.utils.toArray('.scroll-zoom').forEach((img: any) => {
       gsap.fromTo(img,
-        { scale: 1.15 },
+        { scale: 1.05 },
         {
           scale: 1,
           ease: 'none',

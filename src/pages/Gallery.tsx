@@ -219,101 +219,13 @@ function GalleryCard({ item }: { item: GalleryItem; key?: React.Key }) {
           />
         )}
 
-        {/* gradient veil for extra contrast at bottom */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `linear-gradient(to bottom, transparent 30%, rgba(28,53,84,0.85) 100%)`,
-            opacity: hovered ? 1 : 0.4,
-            transition: "opacity 0.4s ease",
-          }}
-        />
+        {/* gradient veil removed as text is gone */}
 
-        {/* category chip — top left (brightens on hover) */}
-        <div
-          style={{
-            position: "absolute",
-            top: 12,
-            left: 12,
-            background: item.accent,
-            color: "#fff",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            padding: "4px 10px",
-            borderRadius: 30,
-            // Brighten via filter on hover
-            filter: hovered ? "brightness(1.15) saturate(1.2)" : "brightness(1)",
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0) scale(1)" : "translateY(-6px) scale(0.9)",
-            transition: "opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-          }}
-        >
-          {item.category}
-        </div>
+        {/* category chip removed */}
 
-        {/* Save Button — top right (Pinterest styling) */}
-        <button
-          onClick={toggleSave}
-          style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            borderRadius: 24,
-            padding: "8px 16px",
-            background: saved ? "#000000" : "#E60023", // Pinterest Red or Black Saved
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            border: "none",
-            cursor: "pointer",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 13,
-            fontWeight: 700,
-            color: "#fff",
-            opacity: hovered ? 1 : 0,
-            // Bouncy cubic-bezier pop
-            transform: hovered ? "scale(1) translateY(0)" : "scale(0.8) translateY(-10px)",
-            transition: "opacity 0.2s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-          }}
-        >
-          {saved && (
-            <span style={{ fontSize: 14 }}>✓</span>
-          )}
-          {saved ? `Saved ${saveCount}` : "Save"}
-        </button>
+        {/* Save Button removed */}
 
-        {/* bottom meta */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: "16px 14px 14px",
-            transform: hovered ? "translateY(0)" : "translateY(6px)",
-            transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-          }}
-        >
-          <div
-            style={{
-              color: "#fff",
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: 1.2,
-              letterSpacing: "-0.01em",
-              textShadow: "0 2px 10px rgba(0,0,0,0.6)",
-            }}
-          >
-            {item.location}
-          </div>
-        </div>
+        {/* bottom meta removed */}
       </div>
     </div>
   );
