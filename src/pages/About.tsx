@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import about1 from '../asset/About_1.png';
+import about2 from '../asset/About_2.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,11 +99,11 @@ const About = () => {
             About JUNO
           </span>
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-bold leading-tight mb-8 text-juno-navy gsap-reveal">
-            We are not a travel agency. <br />
-            <span className="italic text-juno-ochre">We are curators of intentional journeys.</span>
+            Travel isn’t the problem. <br />
+            <span className="italic text-juno-ochre">How we travel is.</span>
           </h1>
           <p className="text-lg md:text-2xl text-juno-navy/60 font-light leading-relaxed gsap-reveal">
-            JUNO was born from a simple question: In a world where we can go anywhere, why do we feel like we've been nowhere?
+            We create small, curated experiences where you don’t just visit places, you actually do things, learn something new, and come back with a story.
           </p>
         </div>
       </section>
@@ -111,18 +113,18 @@ const About = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
           <div className="order-2 lg:order-1 gsap-reveal">
             <h2 className="text-3xl md:text-6xl font-display font-bold mb-8 leading-tight">
-              You Have Everything. <br />
-              <span className="italic text-juno-sand">Except the Real Thing.</span>
+              You have everything. <br />
+              <span className="italic text-juno-sand">Except something real.</span>
             </h2>
             <div className="space-y-6 text-juno-bg/60 font-light leading-relaxed text-base md:text-lg">
               <p>
-                The view from the corner office is breathtaking. But the air is recycled.
+                You’ve been to places. Seen the views.
               </p>
               <p>
-                You have the reservations, the access, the lifestyle. What you've been missing is the Real — the raw, high-octane pulse of a world that exists entirely beyond the screen, beyond the haptic buzz, beyond the curated feed.
+                But the ones that stay with you? Those are different.
               </p>
               <p>
-                There is a gap that no concierge can fill. JUNO was built for that gap.
+                JUNO is built around those experiences, the ones where you don’t just visit, you actually do, learn, and connect.
               </p>
             </div>
             <Link to="/contact" className="mt-12 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-sand hover:text-juno-bg transition-colors">
@@ -131,11 +133,10 @@ const About = () => {
           </div>
           <div className="order-1 lg:order-2 rounded-[3rem] overflow-hidden aspect-square gsap-reveal">
             <img 
-              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1000" 
+              src={about1}
               className="scroll-zoom w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-              alt="Luxury Hotel"
+              alt="Real Experiences"
               loading="lazy"
-              referrerPolicy="no-referrer"
             />
           </div>
         </div>
@@ -146,27 +147,26 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
           <div className="rounded-[3rem] overflow-hidden aspect-square gsap-reveal">
             <img 
-              src="https://images.unsplash.com/photo-1590540179852-2110a54f813a?auto=format&fit=crop&q=80&w=1000" 
+              src={about2}
               className="scroll-zoom w-full h-full object-cover"
-              alt="Artisan Hands"
+              alt="Making It Accessible"
               loading="lazy"
-              referrerPolicy="no-referrer"
             />
           </div>
           <div className="gsap-reveal">
             <h2 className="text-3xl md:text-6xl font-display font-bold mb-8 leading-tight text-juno-navy">
-              The World Is Out There. <br />
-              <span className="italic text-juno-ochre">We Removed the Friction.</span>
+              The world is out there. <br />
+              <span className="italic text-juno-ochre">We just make it accessible.</span>
             </h2>
             <div className="space-y-6 text-juno-navy/60 font-light leading-relaxed text-base md:text-lg">
               <p>
-                The terrifying precision of a master artisan's hands. A kiln at full roar. A desert workshop where craft has been perfected over centuries.
+                Learning pottery from a master in Khurja. Cooking with people who’ve been doing it for generations. Finding places you wouldn’t come across on your own.
               </p>
               <p>
-                These experiences have always been gated — not by distance, but by a lack of precision. We vet the unvettable. We deliver the raw world without sacrificing a single standard you've built your life around.
+                These experiences exist, they’re just not easy to access.
               </p>
               <p className="font-medium text-juno-navy">
-                This is not slow travel. This is the leap.
+                We make them simple, without taking away what makes them special.
               </p>
             </div>
           </div>
@@ -176,16 +176,16 @@ const About = () => {
       {/* Why Invite Only */}
       <section className="py-24 md:py-40 px-6 md:px-12 bg-juno-sand/10 border-y border-juno-sand/20">
         <div className="max-w-4xl mx-auto text-center gsap-reveal">
-          <h2 className="text-3xl md:text-6xl font-display font-bold mb-12 text-juno-navy">Why Invite-Only?</h2>
+          <h2 className="text-3xl md:text-6xl font-display font-bold mb-12 text-juno-navy">Why invite-only?</h2>
           <div className="space-y-8 text-juno-navy/60 font-light leading-relaxed text-base md:text-lg">
             <p className="text-xl md:text-2xl font-display font-medium text-juno-navy italic">
-              "Because presence can't be scaled."
+              "Because the experience changes when the group is small."
             </p>
             <p>
-              When you travel with intention, something shifts. Conversations go deeper. The artisan opens up. The experience stops being a program and starts being a memory.
+              People open up more. You connect more — with the place, and with each other.
             </p>
             <p>
-              Every person in a JUNO journey is there by choice and by fit — not first-come-first-served. That's how we protect the integrity of what we've built.
+              Every JUNO journey is intentionally small and thoughtfully curated. That’s how we keep it meaningful.
             </p>
           </div>
           <div className="mt-16">
@@ -240,15 +240,15 @@ const About = () => {
           <div className="border-t border-juno-navy/10">
             <AccordionItem 
               question="What is JUNO's core mission?" 
-              answer="Our mission is to reconnect urban professionals with the raw, high-octane pulse of the real world through curated experiential journeys that prioritize craft, culture, and calm."
+              answer="Our mission is to create journeys that go beyond sightseeing, built around meaningful experiences and real connection."
             />
             <AccordionItem 
               question="Who is the ideal JUNO traveler?" 
-              answer="JUNO is for the curious and mindful—professionals and creatives who have everything except the 'Real Thing.' It's for those who seek depth over distance and connection over consumption."
+              answer="JUNO is for the curious and intentional people who value depth over distance, and connection over just checking things off."
             />
             <AccordionItem 
               question="What makes JUNO different from a travel agency?" 
-              answer="We are curators, not agents. We don't just book trips; we design intentional experiences. Our journeys are invite-only and focused on cultural depth and creative integrity, removing the friction between you and the extraordinary."
+              answer="We are curators, not agents. We don't just book trips; we design intentional experiences. Our journeys are invite-only, small-group, and focused on cultural depth and creative integrity, removing the friction between you and the extraordinary."
             />
           </div>
 

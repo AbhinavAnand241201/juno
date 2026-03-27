@@ -64,9 +64,39 @@ export default function BlogPostDetail() {
       {/* Article Content */}
       <main className="max-w-3xl mx-auto pb-32 px-6">
         <article 
-          className="prose prose-lg prose-juno max-w-none text-juno-navy/80 font-light leading-relaxed"
+          className="blog-content text-juno-navy/80 font-light"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+        <style>{`
+          .blog-content p {
+            font-size: 1.125rem;
+            line-height: 2;
+            margin-bottom: 1.75rem;
+            letter-spacing: 0.01em;
+          }
+          .blog-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-top: 3rem;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
+          }
+          .blog-content em {
+            font-style: italic;
+            opacity: 0.85;
+          }
+          .blog-content a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+          }
+          .blog-content > p:first-child {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            color: rgba(26,26,46,0.75);
+          }
+        `}</style>
         
         <footer className="mt-24 pt-16 border-t border-juno-navy/10">
           <div className="bg-juno-navy text-juno-bg p-12 rounded-[2.5rem] text-center">

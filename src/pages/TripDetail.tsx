@@ -6,6 +6,7 @@ import RequestInviteForm from '../components/RequestInviteForm';
 // Import local image assets for itineraries
 import khurjaItinerary from '../assets/gallery/khurja.png';
 import hurjaItinerary from '../asset/Experience_1.png';
+import descriptionImg from '../asset/Description_img.jpg';
 
 type SpecificTripData = {
   id: string;
@@ -63,7 +64,15 @@ export default function TripDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           {/* Main Content Area */}
           <div className="lg:col-span-8">
-            <div className="mb-12">
+            <div className="rounded-[2rem] md:rounded-[3rem] overflow-hidden mb-12 shadow-2xl aspect-[16/10] w-full max-w-5xl">
+              <img 
+                src={descriptionImg}
+                alt="Trip Description" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div className="mb-16">
               <h1 className="text-4xl md:text-6xl font-display font-bold text-juno-navy mb-6" style={{ fontFamily: '"Playfair Display", serif' }}>
                 {trip.title}
               </h1>
@@ -76,14 +85,6 @@ export default function TripDetail() {
                 <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-juno-ochre" /> {trip.location}</span>
                 <span className="flex items-center gap-2"><Globe className="w-4 h-4 text-juno-ochre" /> Curated Experience</span>
               </div>
-            </div>
-
-            <div className="rounded-3xl overflow-hidden mb-16 shadow-lg aspect-video max-w-2xl">
-              <img 
-                src={trip.image} 
-                alt={trip.title} 
-                className="w-full h-full object-cover"
-              />
             </div>
 
             <div className="space-y-16">
@@ -168,33 +169,39 @@ export default function TripDetail() {
                   Preview Itinerary
                 </h3>
                 
-                <div className="space-y-6 blur-[6px] select-none opacity-40">
-                  {[
-                    { time: '08:00 AM', event: 'Departure from New Delhi' },
-                    { time: '10:30 AM', event: 'Arrival and Artisan Greeting' },
-                    { time: '11:30 AM', event: 'Studio Workshop Session I' },
-                    { time: '01:30 PM', event: 'Farm-to-Table Traditional Lunch' },
-                    { time: '03:00 PM', event: 'Guided Market Exploration' },
-                    { time: '05:00 PM', event: 'Evening Tea and Reflection' },
-                    { time: '06:30 PM', event: 'Return Journey Begins' },
-                  ].map((step, i) => (
-                    <div key={i} className="flex gap-4 border-l border-white/20 pl-4">
-                      <div className="text-[10px] font-bold text-juno-sand shrink-0">{step.time}</div>
-                      <div className="text-sm text-white/80">{step.event}</div>
-                    </div>
-                  ))}
-                </div>
+                <div className="relative mt-8">
+                  {/* Blurred Itinerary Text */}
+                  <div className="space-y-6 blur-[3px] select-none opacity-50 pointer-events-none pb-12">
+                    {[
+                      { time: '08:00 AM', event: 'Departure from New Delhi' },
+                      { time: '10:30 AM', event: 'Arrival and Artisan Greeting' },
+                      { time: '11:30 AM', event: 'Studio Workshop Session I' },
+                      { time: '01:30 PM', event: 'Farm-to-Table Traditional Lunch' },
+                      { time: '03:00 PM', event: 'Guided Market Exploration' },
+                      { time: '05:00 PM', event: 'Evening Tea and Reflection' },
+                      { time: '06:30 PM', event: 'Return Journey Begins' },
+                    ].map((step, i) => (
+                      <div key={i} className="flex gap-4 border-l border-white/20 pl-4">
+                        <div className="text-[10px] font-bold text-juno-sand shrink-0">{step.time}</div>
+                        <div className="text-sm text-white/80">{step.event}</div>
+                      </div>
+                    ))}
+                  </div>
 
-                <div className="mt-12 text-center">
-                  <p className="text-white/60 text-xs font-light mb-8">
-                    Unlock the full schedule and exclusive details by joining our community.
-                  </p>
-                  <button 
-                    onClick={() => setOpen(true)}
-                    className="w-full py-4 bg-white text-juno-navy rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-juno-sand transition-colors"
-                  >
-                    View Full Details
-                  </button>
+                  {/* Centered Button Overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
+                    <div className="bg-juno-navy/30 backdrop-blur-xl p-8 rounded-[2rem] border border-white/10 text-center w-full shadow-2xl">
+                      <p className="text-white/90 text-sm xl:text-base font-light mb-8">
+                        Unlock the full schedule and exclusive details by joining our community.
+                      </p>
+                      <button 
+                        onClick={() => setOpen(true)}
+                        className="w-full py-4 bg-white text-juno-navy rounded-full text-xs font-bold uppercase tracking-widest hover:bg-juno-sand transition-all transform hover:scale-105 shadow-[0_8px_30px_rgb(255,255,255,0.12)]"
+                      >
+                        View Full Details
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

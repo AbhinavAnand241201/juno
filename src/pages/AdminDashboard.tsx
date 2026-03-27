@@ -115,66 +115,61 @@ const AdminDashboard: React.FC = () => {
           className="rounded-[1.75rem] overflow-hidden border border-juno-navy/10 shadow-2xl bg-white"
         >
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1200px] text-sm">
+            <table className="w-full min-w-[2000px] text-sm text-juno-navy">
               <thead className="bg-juno-navy text-juno-bg">
-                <tr className="text-left">
-                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Profile</th>
-                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Contact & Social</th>
-                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Experiences & Hobbies</th>
-                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Intent (Why JUNO)</th>
+                <tr className="text-left whitespace-nowrap">
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Name</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Age</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Gender</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">State/City</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Email</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Phone</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Instagram</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Occupation</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Hobbies</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Experiences</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Why JUNO</th>
+                  <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Seeking</th>
                   <th className="px-4 py-5 uppercase tracking-[0.15em] text-[10px]">Submitted At</th>
                 </tr>
               </thead>
               <tbody>
                 {loading && (
                   <tr>
-                    <td className="px-4 py-8 text-center text-juno-navy/60" colSpan={5}>Loading submissions...</td>
+                    <td className="px-4 py-8 text-center text-juno-navy/60" colSpan={13}>Loading submissions...</td>
                   </tr>
                 )}
                 {!loading && rows.length === 0 && (
                   <tr>
-                    <td className="px-4 py-8 text-center text-juno-navy/60" colSpan={5}>No request invites found.</td>
+                    <td className="px-4 py-8 text-center text-juno-navy/60" colSpan={13}>No request invites found.</td>
                   </tr>
                 )}
                 {!loading &&
                   rows.map((row, idx) => (
-                    <tr key={row.id} className={`transition-colors hover:bg-black/[0.02] ${idx % 2 === 0 ? 'bg-juno-bg/30' : 'bg-white'}`}>
-                      <td className="px-4 py-4 text-juno-navy align-top border-b border-black/5">
-                        <div className="font-bold">{row.name}</div>
-                        <div className="text-xs opacity-70 mt-1">{row.age} yrs • {row.gender}</div>
-                        <div className="text-xs opacity-70">{row.state}</div>
-                        <div className="text-xs opacity-70 mt-1 font-medium">{row.occupation}</div>
-                      </td>
-                      <td className="px-4 py-4 text-juno-navy/80 align-top border-b border-black/5">
-                        <div><a href={`mailto:${row.email}`} className="hover:text-juno-ochre transition-colors truncate">{row.email}</a></div>
-                        <div className="mt-1"><a href={`tel:${row.phone}`} className="hover:text-juno-ochre transition-colors truncate">{row.phone}</a></div>
-                        <div className="mt-2 text-juno-navy font-medium text-xs">{row.instagram}</div>
-                      </td>
-                      <td className="px-4 py-4 text-juno-navy/80 align-top max-w-[250px] border-b border-black/5">
-                        <div className="mb-2">
-                          <span className="text-[10px] uppercase font-bold block mb-1">Experiences:</span>
-                          <span className="text-xs bg-juno-ochre/10 text-juno-navy px-2 py-1 rounded inline-block">
-                            {row.experiences.join(', ') || '-'}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] uppercase font-bold block mb-1">Hobbies:</span>
-                          <span className="text-xs">{row.hobbies}</span>
+                    <tr key={row.id} className={`transition-colors hover:bg-black/[0.02] ${idx % 2 === 0 ? 'bg-juno-bg/30' : 'bg-white'} border-b border-black/5 align-top`}>
+                      <td className="px-4 py-4 whitespace-nowrap font-bold">{row.name}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">{row.age}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">{row.gender}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">{row.state}</td>
+                      <td className="px-4 py-4 whitespace-nowrap"><a href={`mailto:${row.email}`} className="hover:text-juno-ochre transition-colors text-blue-600 truncate">{row.email}</a></td>
+                      <td className="px-4 py-4 whitespace-nowrap"><a href={`tel:${row.phone}`} className="hover:text-juno-ochre transition-colors truncate">{row.phone}</a></td>
+                      <td className="px-4 py-4 whitespace-nowrap">{row.instagram}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">{row.occupation}</td>
+                      <td className="px-4 py-4 max-w-[200px] truncate" title={row.hobbies}>{row.hobbies}</td>
+                      <td className="px-4 py-4 max-w-[200px] truncate" title={row.experiences.join(', ')}>
+                        <div className="flex flex-wrap gap-1">
+                          {row.experiences.map((exp, i) => (
+                            <span key={i} className="text-[10px] bg-juno-ochre/10 text-juno-navy px-2 py-0.5 rounded inline-block">{exp}</span>
+                          ))}
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-juno-navy/80 max-w-[350px] align-top border-b border-black/5">
-                        <div className="text-xs mb-3">
-                          <span className="font-bold block mb-1">Why JUNO:</span> 
-                          <span className="italic">{row.whyJuno}</span>
-                        </div>
-                        <div className="text-xs">
-                          <span className="font-bold block mb-1">Seeking:</span> 
-                          <span className="italic">{row.seekingThroughTravel}</span>
-                        </div>
+                      <td className="px-4 py-4 max-w-[300px] text-xs leading-relaxed" title={row.whyJuno}>
+                        <div className="line-clamp-3">{row.whyJuno}</div>
                       </td>
-                      <td className="px-4 py-4 text-juno-navy/70 whitespace-nowrap align-top border-b border-black/5">
-                        <span className="text-xs">{row.timestamp}</span>
+                      <td className="px-4 py-4 max-w-[300px] text-xs leading-relaxed" title={row.seekingThroughTravel}>
+                        <div className="line-clamp-3">{row.seekingThroughTravel}</div>
                       </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-xs text-juno-navy/70">{row.timestamp}</td>
                     </tr>
                   ))}
               </tbody>

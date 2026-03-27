@@ -60,28 +60,23 @@ const FAQ = () => {
   const faqs: FAQItem[] = [
     {
       question: "Who is JUNO actually for?",
-      answer: "People who are quietly tired of ordinary weekends. Professionals, creatives, and curious minds between 25–40 who want to make something real — and don't know where to start. If you felt something reading this page, it's probably for you.",
+      answer: "People who are tired of traveling the usual way. If you’re curious, open to new experiences, and want to do more than just “go somewhere,” you’ll feel at home here. If this page resonates with you, it’s probably for you.",
       category: 'Experience'
     },
     {
       question: "What does \"invite-only\" actually mean?",
-      answer: "It means we don't run open registrations. You request a seat, we have a brief conversation, and we make sure the fit is right — for you and for the group. It's not exclusive for the sake of ego. It's intentional for the sake of experience.",
+      answer: "We don’t run open bookings. You request a seat, we have a quick conversation, and make sure it’s the right fit for you and for the group. It’s not about exclusivity. It’s about keeping the experience right.",
       category: 'Booking'
     },
     {
       question: "Do I need skills or experience?",
-      answer: "Bring none. Our artisans are extraordinary teachers. The only prerequisite is genuine curiosity.",
+      answer: "Bring none. All you need is curiosity and a willingness to try something new.",
       category: 'Experience'
     },
     {
       question: "What's included?",
-      answer: "Everything that removes friction — curated transport from Delhi, handpicked accommodation, all workshop sessions, most meals, and our team on the ground with you. The full breakdown is shared before you commit a single rupee.",
+      answer: "Everything you need for a seamless experience — curated transport from Delhi, stays, sessions, most meals, and our team with you throughout. You’ll get a full breakdown before you commit to anything.",
       category: 'Journeys'
-    },
-    {
-      question: "How small is small?",
-      answer: "We keep our journeys intimate. It's not about the number; it's about the connection.",
-      category: 'Experience'
     },
     {
       question: "What about safety?",

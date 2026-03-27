@@ -61,9 +61,22 @@ export default function RequestInviteForm({ open, onClose }: Props) {
   const isStep2Valid = formData.instagram && formData.occupation && formData.hobbies;
   const isStep3Valid = formData.experiences.length > 0 && formData.experiences.length <= 3 && formData.whyJuno && formData.seekingThroughTravel;
 
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleNext = () => {
-    if (step === 1 && isStep1Valid) setStep(2);
-    else if (step === 2 && isStep2Valid) setStep(3);
+    if (step === 1) {
+      if (!isStep1Valid) return;
+      if (!validateEmail(formData.email)) {
+        setError('Please provide a valid email address.');
+        return;
+      }
+      setError('');
+      setStep(2);
+    } else if (step === 2 && isStep2Valid) {
+      setStep(3);
+    }
   };
 
   const handlePrev = () => {

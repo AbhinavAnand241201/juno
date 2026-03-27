@@ -12,6 +12,16 @@ import AmbientGlow from "../components/AmbientGlow";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ─── Asset imports ──────────────────────────────────────────────────────────────
+import Gallery3  from "../asset/Gallery_3.jpg";
+import Gallery5  from "../asset/Gallery_5.jpg";
+import Gallery6  from "../asset/Gallery_6.jpg";
+import Gallery7  from "../asset/Gallery_7.jpg";
+import Gallery8  from "../asset/Gallery_8.mp4";
+import Gallery9  from "../asset/Gallery_9.jpg";
+import Gallery1Png from "../asset/GALLERY1.png";
+import Gallery7Png from "../asset/GALLERY7.png";
+
 // ─── Brand tokens ──────────────────────────────────────────────────────────────
 const T = {
   cream:       "#F5F0E4",
@@ -35,54 +45,26 @@ interface GalleryItem {
   src: string;
   alt: string;
   location: string;
-  country: string;
   category: string;
   height: CardHeight;
   accent: string;
+  isVideo?: boolean;
 }
-
-const ITEMS: GalleryItem[] = [
-  { id:  1, src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=85", alt: "Swiss Alps",          location: "Swiss Alps",       country: "Switzerland", category: "Mountain",  height: "xl",  accent: T.olive },
-  { id:  2, src: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=700&q=85", alt: "Venice canals",       location: "Grand Canal",      country: "Italy",       category: "City",      height: "md",  accent: T.navy },
-  { id:  3, src: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=700&q=85", alt: "Santorini",           location: "Oia",              country: "Greece",      category: "Island",    height: "sm",  accent: T.terracotta },
-  { id:  4, src: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=700&q=85", alt: "Fushimi Inari",       location: "Fushimi Inari",    country: "Japan",       category: "Culture",   height: "lg",  accent: T.terracotta },
-  { id:  5, src: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=700&q=85", alt: "Sahara",              location: "Merzouga",         country: "Morocco",     category: "Desert",    height: "sm",  accent: T.amber },
-  { id:  6, src: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=700&q=85", alt: "Maldives",            location: "North Atoll",      country: "Maldives",    category: "Ocean",     height: "xl",  accent: T.navy },
-  { id:  7, src: "https://images.unsplash.com/photo-1509233725247-49e657c54213?w=700&q=85", alt: "Northern Lights",     location: "Tromsø",           country: "Norway",      category: "Arctic",    height: "md",  accent: T.navyLight },
-  { id:  8, src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=700&q=85", alt: "Amalfi Coast",        location: "Positano",         country: "Italy",       category: "Coast",     height: "sm",  accent: T.terracotta },
-  { id:  9, src: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=700&q=85", alt: "Patagonia",           location: "Torres del Paine", country: "Chile",       category: "Wild",      height: "lg",  accent: T.olive },
-  { id: 10, src: "https://images.unsplash.com/photo-1539788816080-8d08a8a77bee?w=700&q=85", alt: "Cappadocia balloons", location: "Göreme",           country: "Turkey",      category: "Sky",       height: "xl",  accent: T.amber },
-  { id: 11, src: "https://images.unsplash.com/photo-1580502304784-8985b7eb7260?w=700&q=85", alt: "Iceland Waterfall",   location: "Skógafoss",        country: "Iceland",     category: "Nature",    height: "md",  accent: T.navyLight },
-  { id: 12, src: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=700&q=85", alt: "Bali Terraces",       location: "Tegalalang",       country: "Indonesia",   category: "Culture",   height: "sm",  accent: T.olive },
-  { id: 13, src: "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=700&q=85", alt: "Colosseum",           location: "Rome",             country: "Italy",       category: "History",   height: "lg",  accent: T.terracotta },
-  { id: 14, src: "https://images.unsplash.com/photo-1562613960-adf392acf9e4?w=700&q=85", alt: "Amazon",              location: "Manaus",           country: "Brazil",      category: "Jungle",    height: "sm",  accent: T.olive },
-  { id: 15, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=85", alt: "Machu Picchu",        location: "Machu Picchu",     country: "Peru",        category: "Ancient",   height: "md",  accent: T.sand },
-  { id: 16, src: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=700&q=85", alt: "Great Wall",          location: "Mutianyu",         country: "China",       category: "History",   height: "xl",  accent: T.navy },
-];
 
 const HEIGHT_PX: Record<CardHeight, number> = {
   xs: 180, sm: 240, md: 300, lg: 380, xl: 460,
 };
 
-const galleryImages: Record<string, { default: string }> = import.meta.glob(
-  ["../assets/gallery/*.{png,jpg,jpeg,webp}", "../asset/*.{png,jpg,jpeg,webp}"],
-  { eager: true }
-);
-
-const LOCAL_ITEMS: GalleryItem[] = Object.values(galleryImages)
-  .filter(mod => {
-    // optional: filter out UI specific files like logo or background images if desired
-    const path = (mod as any).default || String(mod);
-    return !path.includes('is_it_for_u') && !path.includes('logo');
-  })
-  .map((mod, i) => {
-    const original = ITEMS[i % ITEMS.length];
-    return {
-      ...original,
-      id: i + 1,
-      src: (mod as any).default || String(mod),
-    };
-});
+const LOCAL_ITEMS: GalleryItem[] = [
+  { id: 1,  src: Gallery1Png, alt: "Juno Moments",      location: "Landscapes",       category: "Wild",      height: "lg",  accent: T.olive },
+  { id: 2,  src: Gallery3,    alt: "Gallery 3",          location: "Destinations",     category: "Culture",   height: "sm",  accent: T.terracotta },
+  { id: 3,  src: Gallery5,    alt: "Gallery 5",          location: "Adventures",       category: "Jungle",    height: "xl",  accent: T.olive },
+  { id: 4,  src: Gallery6,    alt: "Gallery 6",          location: "Serenity",         category: "Ancient",   height: "sm",  accent: T.sand },
+  { id: 5,  src: Gallery7,    alt: "Gallery 7",          location: "Hidden Gems",      category: "History",   height: "lg",  accent: T.terracotta },
+  { id: 6,  src: Gallery8,    alt: "Gallery Reel",       location: "In Motion",        category: "Cinema",    height: "md",  accent: T.amber, isVideo: true },
+  { id: 7,  src: Gallery9,    alt: "Gallery 9",          location: "The Journey",      category: "Wild",      height: "xl",  accent: T.olive },
+  { id: 8,  src: Gallery7Png, alt: "Juno Gallery 7",    location: "Curated",          category: "Featured",  height: "sm",  accent: T.amberLight },
+];
 
 // ─── Skeleton Card ─────────────────────────────────────────────────────────────
 function SkeletonCard({ height, style = {} }: { height: number; style?: React.CSSProperties; key?: React.Key }) {
@@ -201,23 +183,41 @@ function GalleryCard({ item }: { item: GalleryItem; key?: React.Key }) {
           width: "100%",
         }}
       >
-        <img
-          ref={imgRef}
-          src={item.src}
-          alt={item.alt}
-          onLoad={() => setLoaded(true)}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-            // Zoom in on hover and slightly dim brightness instead of just opacity layer
-            transform: hovered ? "scale(1.08)" : "scale(1)",
-            filter: hovered ? "brightness(0.85)" : "brightness(1)",
-            transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease",
-          }}
-          referrerPolicy="no-referrer"
-        />
+        {item.isVideo ? (
+          <video
+            src={item.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            onLoadedData={() => setLoaded(true)}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              transform: hovered ? "scale(1.08)" : "scale(1)",
+              filter: hovered ? "brightness(0.85)" : "brightness(1)",
+              transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease",
+            }}
+          />
+        ) : (
+          <img
+            ref={imgRef}
+            src={item.src}
+            alt={item.alt}
+            onLoad={() => setLoaded(true)}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              transform: hovered ? "scale(1.08)" : "scale(1)",
+              filter: hovered ? "brightness(0.85)" : "brightness(1)",
+              transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease",
+            }}
+          />
+        )}
 
         {/* gradient veil for extra contrast at bottom */}
         <div

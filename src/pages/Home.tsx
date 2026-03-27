@@ -19,9 +19,7 @@ import potteryImage from '../assets/gallery/pottery.png';
 import isItForYouImg from '../asset/is_it_for_u.jpg';
 
 // Gallery images from asset folder
-import exp1 from '../asset/Experience_1.png';
 import exp2 from '../asset/Experience_2.jpg';
-import exp3 from '../asset/Exp_3.png';
 import exp4 from '../asset/EXP_4.png';
 import exp5 from '../asset/EXP_5.png';
 import exp6 from '../asset/EXP_6.png';
@@ -120,16 +118,6 @@ const Home = () => {
       <IntroOverlay />
       <RequestInviteForm open={bookingOpen} onClose={() => setBookingOpen(false)} />
 
-      {/* Scrolling Ticker */}
-      <section className="bg-[#2A2520] text-[#E8A94A] py-3 overflow-hidden">
-        <div className="whitespace-nowrap animate-[ticker_25s_linear_infinite] inline-block">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <span key={idx}>
-              <span className="px-8 text-xs tracking-[0.2em] uppercase">Where stories, experiences and connections unfold ✦</span>
-            </span>
-          ))}
-        </div>
-      </section>
 
       {/* Hero Section */}
       <section className="hero-section relative h-[100vh] flex items-center justify-center overflow-hidden pt-20">
@@ -278,7 +266,7 @@ const Home = () => {
                   Spend a day where clay becomes art and you become part of the process.
                 </p>
                 <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-bg group-hover:text-juno-sand transition-colors mt-auto">
-                  Book your free slot <ArrowRight className="w-4 h-4" />
+                  Book your slot <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
             </Link>
@@ -319,7 +307,7 @@ const Home = () => {
         </div>
 
         <div className="gallery-track flex gap-4 md:gap-8">
-          {[exp1, exp2, exp3, exp4, exp5, exp6, gallery1, gallery2, gallery3].map((img, i) => (
+          {[exp2, exp4, exp5, exp6, gallery1, gallery2, gallery3].map((img, i) => (
             <div key={i} className="w-64 md:w-96 h-80 md:h-[30rem] shrink-0 rounded-2xl overflow-hidden hover-zoom">
               <img src={img} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Gallery" loading="lazy" />
             </div>
