@@ -123,7 +123,6 @@ export default function TripDetail() {
                 <ul className="space-y-4">
                   {[
                     'Travel from Delhi and back',
-                    'Access to pottery studios and workshops',
                     'Hands-on craft experience',
                     'Meals and refreshments',
                     'Support from the JUNO team',
