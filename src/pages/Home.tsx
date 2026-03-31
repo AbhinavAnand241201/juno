@@ -189,9 +189,9 @@ const Home = () => {
               </div>
             </div>
             <div className="relative rounded-[2rem] overflow-hidden aspect-[4/3] shadow-2xl">
-              <img 
-                src={gallery1} 
-                alt="Juno Experience" 
+              <img
+                src={gallery1}
+                alt="Juno Experience"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -231,7 +231,7 @@ const Home = () => {
                 <pillar.icon className="w-6 h-6" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-bold mb-4 tracking-widest uppercase">{pillar.title}</h3>
-                <p className="text-juno-bg/60 text-sm font-light">Every journey is intentionally curated for depth and connection.</p>
+              <p className="text-juno-bg/60 text-sm font-light">Every journey is intentionally curated for depth and connection.</p>
             </motion.div>
           ))}
         </div>
@@ -246,7 +246,7 @@ const Home = () => {
               Ready to make something real? Join us on our next journey and unlock an experience the city could never give you.
             </p>
           </div>
-          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Khurja Trip Card */}
@@ -260,7 +260,7 @@ const Home = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-juno-navy/90 via-juno-navy/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">Khurja | 5th March 2026</div>
+                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">Khurja | 5th April  March 2026</div>
                 <h3 className="text-2xl md:text-3xl font-display font-bold text-juno-bg mb-3">Clay Day — Khurja Craft Immersion</h3>
                 <p className="text-juno-bg/70 font-light text-sm mb-6 max-w-md">
                   Spend a day where clay becomes art and you become part of the process.

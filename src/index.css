@@ -2,9 +2,12 @@
 @import "react-quill-new/dist/quill.snow.css";
 @import "tailwindcss";
 
+
+
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "DM Serif Display", "Playfair Display", serif;
+
   
   --color-juno-bg: #FCFAE9;
   --color-juno-navy: #1B3B57;
