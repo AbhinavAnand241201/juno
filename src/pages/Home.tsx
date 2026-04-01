@@ -171,7 +171,7 @@ const Home = () => {
               <h2 className="text-4xl md:text-6xl font-display font-bold text-juno-navy mb-8 leading-tight"
                 style={{ fontFamily: '"Playfair Display", serif' }}
               >
-                What is <span className="italic text-juno-ochre">JUNO?</span>
+                What is <span className="font-juno-accent text-juno-ochre tracking-[0.1em] inline-block">JUNO?</span>
               </h2>
               <div className="space-y-5 text-juno-navy/70 font-light leading-relaxed text-base md:text-lg">
                 <p>
