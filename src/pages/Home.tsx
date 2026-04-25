@@ -260,7 +260,7 @@ const Home = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-juno-navy/90 via-juno-navy/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">MUKTESHWAR | 1–3 MAY 2026</div>
+                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">MUKTESHWAR | 15–17 MAY 2026</div>
                 <h3 className="text-2xl md:text-3xl font-display font-bold text-juno-bg mb-3">Beyond the Usual — Mukteshwar Escape</h3>
                 <p className="text-juno-bg/70 font-light text-sm mb-6 max-w-md">
                   Step into forests, hidden trails, and quiet mountain moments designed to feel different from the typical hill trip.
