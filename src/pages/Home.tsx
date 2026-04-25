@@ -15,7 +15,7 @@ import RequestInviteForm from '../components/RequestInviteForm';
 
 // Local assets
 import heroVideo from '../asset/HERO SECTION_Option__1.mp4';
-import potteryImage from '../assets/gallery/pottery.png';
+import mukteshwarCardImage from '../asset/MUKT.png';
 import isItForYouImg from '../asset/is_it_for_u.jpg';
 
 // Gallery images from asset folder
@@ -177,11 +177,11 @@ const Home = () => {
                 <p>
                   JUNO is an experiential travel platform designed for people who want more than just a trip.
                 </p>
-                <p>
-                  Instead of rushing from one destination to another, we create journeys where you participate, learn, and connect with the places you visit. You might spend a day shaping clay with artisans in Khurja, stay in a monastery in the mountains, or cycle through quiet villages where life moves at a different pace.
-                </p>
-                <p>
-                  Our experiences are intentionally small, thoughtfully curated, and built around real people and real places. Every journey is designed to feel personal, meaningful, and memorable.
+                  <p>
+                    Instead of rushing from one destination to another, we create journeys where you participate, learn, and connect with the places you visit. You might spend time shaping clay with artisans, stay in a monastery in the mountains, or walk through quiet mountain trails where life moves at a different pace.
+                  </p>
+                  <p>
+                    Our experiences are intentionally small, thoughtfully curated, and built around real people and real places. Every journey is designed to feel personal, meaningful, and memorable.
                 </p>
                 <p className="font-medium text-juno-navy italic text-xl">
                   Because travel should not just show you the world — it should let you experience it.
@@ -249,21 +249,21 @@ const Home = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Khurja Trip Card */}
+          {/* Mukteshwar Trip Card */}
           <div className="gsap-reveal reveal-left">
-            <Link to="/trip/clay-day-khurja" className="group block relative aspect-[4/5] overflow-hidden rounded-3xl bg-juno-navy/5">
+            <Link to="/trip/beyond-the-usual-mukteshwar" className="group block relative aspect-[4/5] overflow-hidden rounded-3xl bg-juno-navy/5">
               <img
-                src={potteryImage}
-                alt="Pottery in Khurja"
+                src={mukteshwarCardImage}
+                alt="Mukteshwar Escape"
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-juno-navy/90 via-juno-navy/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">Khurja | 5th April 2026</div>
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-juno-bg mb-3">Clay Day — Khurja Craft Immersion</h3>
+                <div className="text-juno-sand text-[10px] uppercase tracking-widest mb-2 font-bold">MUKTESHWAR | 1–3 MAY 2026</div>
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-juno-bg mb-3">Beyond the Usual — Mukteshwar Escape</h3>
                 <p className="text-juno-bg/70 font-light text-sm mb-6 max-w-md">
-                  Spend a day where clay becomes art and you become part of the process.
+                  Step into forests, hidden trails, and quiet mountain moments designed to feel different from the typical hill trip.
                 </p>
                 <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-juno-bg group-hover:text-juno-sand transition-colors mt-auto">
                   Book your slot <ArrowRight className="w-4 h-4" />

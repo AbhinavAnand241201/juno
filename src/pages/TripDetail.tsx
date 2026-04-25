@@ -4,15 +4,16 @@ import { ArrowLeft, ArrowRight, MapPin, Clock, Globe } from 'lucide-react';
 import RequestInviteForm from '../components/RequestInviteForm';
 
 // Import local image assets for itineraries
-import khurjaItinerary from '../assets/gallery/khurja.png';
+import muktItinerary1 from '../asset/MUKT1.png';
+import muktItinerary2 from '../asset/MUKT2.png';
 import hurjaItinerary from '../asset/Experience_1.png';
-import descriptionImg from '../asset/Description_img.jpg';
 
 type SpecificTripData = {
   id: string;
   title: string;
   subtitle: string;
   image: string;
+  secondaryImage?: string;
   duration: string;
   location: string;
 };
@@ -26,13 +27,14 @@ const tripsData: Record<string, SpecificTripData> = {
     duration: '6 Days',
     location: 'Gujarat, India',
   },
-  'clay-day-khurja': {
-    id: 'clay-day-khurja',
-    title: 'Clay Day — Khurja Craft Immersion',
-    subtitle: 'Spend a day where clay becomes art and you become part of the process.',
-    image: khurjaItinerary,
-    duration: '1 Day',
-    location: 'Khurja, UP',
+  'beyond-the-usual-mukteshwar': {
+    id: 'beyond-the-usual-mukteshwar',
+    title: 'Beyond the Usual — Mukteshwar Escape',
+    subtitle: 'Step into forests, hidden trails, and quiet mountain moments designed to feel different from the typical hill trip.',
+    image: muktItinerary1,
+    secondaryImage: muktItinerary2,
+    duration: '3 Days',
+    location: 'Mukteshwar, Uttarakhand',
   }
 };
 
@@ -66,7 +68,7 @@ export default function TripDetail() {
           <div className="lg:col-span-8">
             <div className="rounded-[2rem] md:rounded-[3rem] overflow-hidden mb-12 shadow-2xl aspect-[16/10] w-full max-w-5xl">
               <img 
-                src={descriptionImg}
+                src={trip.image}
                 alt="Trip Description" 
                 className="w-full h-full object-cover"
               />
@@ -91,22 +93,33 @@ export default function TripDetail() {
               <section>
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">About This Experience</h2>
                 <div className="prose prose-lg text-juno-navy/70 font-light leading-relaxed space-y-4">
-                  <p>Just beyond Delhi lies Khurja, a town where clay has shaped stories for generations.</p>
-                  <p>This isn’t a sightseeing trip. It’s a chance to step into a working craft culture, meet the people behind it, and create something with your own hands.</p>
-                  <p>Expect a day that feels slower, more tactile, and unexpectedly rewarding.</p>
+                  <p>Mukteshwar is where the mountains feel quieter, the forests feel closer, and time naturally slows down.</p>
+                  <p>Set high in the Kumaon hills, this offbeat town offers a refreshing escape from crowded hill stations — with forest trails, hidden waterfalls, village paths, and evenings that unfold effortlessly.</p>
+                  <p>This experience is about stepping outside routine and spending time outdoors, moving at a comfortable pace, and discovering the mountains in a more personal way.</p>
                 </div>
               </section>
+
+              {trip.secondaryImage && (
+                <div className="rounded-[2rem] overflow-hidden shadow-xl aspect-[16/9] w-full">
+                  <img 
+                    src={trip.secondaryImage}
+                    alt="Trip Atmosphere" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
 
               <section>
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">What You’ll Experience</h2>
                 <div className="bg-juno-sand/5 p-8 rounded-3xl border border-juno-sand/20">
-                  <p className="mb-6 font-medium text-juno-navy">A curated day of discovery, craft, and connection.</p>
+                  <p className="mb-6 font-medium text-juno-navy">A curated journey of mountains, forests, and slow living.</p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      'Meet local artisans',
-                      'Step inside real pottery workshops',
-                      'Try shaping clay yourself',
-                      'Spend time exploring the heart of Khurja'
+                      'Guided forest walks and nature immersion',
+                      'Village walks and local culture',
+                      'Morning yoga and recreational activities',
+                      'Bonfire evenings with music and group activities',
+                      'Mountain café dining experience'
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-juno-navy/70">
                         <div className="w-1.5 h-1.5 rounded-full bg-juno-ochre" />
@@ -119,28 +132,55 @@ export default function TripDetail() {
               </section>
 
               <section>
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">What’s Included</h2>
-                <ul className="space-y-4">
-                  {[
-                    'Travel from Delhi and back',
-                    'Hands-on craft experience',
-                    'Meals and refreshments',
-                    'Support from the JUNO team',
-                    'A small keepsake from the day'
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-4 text-juno-navy/70 border-b border-juno-navy/5 pb-4">
-                      <ArrowRight className="w-4 h-4 text-juno-ochre" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-juno-navy mb-6">Included & Excluded</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-juno-navy mb-4">Included</h3>
+                    <ul className="space-y-3">
+                      {[
+                        'Travel (Delhi to Mukteshwar & return)',
+                        'Accommodation for 2 Nights / 3 Days',
+                        'All local transfers',
+                        'Guided forest walk / nature immersion',
+                        'Village walk',
+                        'Morning yoga or recreational activity',
+                        'Bonfire evening with music & group activities',
+                        '1–2 Trip Captains',
+                        '5 Meals in total'
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-sm text-juno-navy/70">
+                          <span className="text-green-600 mt-0.5">✓</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-juno-navy mb-4">Not Included</h3>
+                    <ul className="space-y-3">
+                      {[
+                        'Meals other than mentioned',
+                        'Dinner at local mountain café (own cost)',
+                        'Personal expenses (shopping, café bills, etc.)',
+                        'Adventure activities outside planned experience',
+                        'Anything not mentioned in inclusions',
+                        'Alcohol'
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-sm text-juno-navy/70">
+                          <span className="text-red-400 mt-0.5">✕</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </section>
 
               <section className="bg-juno-navy text-juno-bg p-12 rounded-[3rem] text-center">
                 <h2 className="text-2xl md:text-3xl font-display font-bold mb-6">Why Join</h2>
                 <p className="text-xl md:text-2xl font-light italic mb-10 opacity-80">
-                  "Because sometimes the best way to understand a place<br />
-                  is to make something in it."
+                  "Because sometimes the best way to reset<br />
+                  is to step into the mountains and let time slow down."
                 </p>
                 <button 
                   onClick={() => setOpen(true)}
@@ -172,13 +212,9 @@ export default function TripDetail() {
                   {/* Blurred Itinerary Text */}
                   <div className="space-y-6 blur-[3px] select-none opacity-50 pointer-events-none pb-12">
                     {[
-                      { time: '08:00 AM', event: 'Departure from New Delhi' },
-                      { time: '10:30 AM', event: 'Arrival and Artisan Greeting' },
-                      { time: '11:30 AM', event: 'Studio Workshop Session I' },
-                      { time: '01:30 PM', event: 'Farm-to-Table Traditional Lunch' },
-                      { time: '03:00 PM', event: 'Guided Market Exploration' },
-                      { time: '05:00 PM', event: 'Evening Tea and Reflection' },
-                      { time: '06:30 PM', event: 'Return Journey Begins' },
+                      { time: 'DAY 1', event: 'ARRIVAL | VILLAGE WALK & CAFÉ DINNER' },
+                      { time: 'DAY 2', event: 'FOREST & EVENING IN THE HILLS' },
+                      { time: 'DAY 3', event: 'MORNING RESET → RETURN' }
                     ].map((step, i) => (
                       <div key={i} className="flex gap-4 border-l border-white/20 pl-4">
                         <div className="text-[10px] font-bold text-juno-sand shrink-0">{step.time}</div>
